@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class PlayerManager implements Serializable {
     private Map<String, Player> playerMap;
+    private Player activePlayer;
     public PlayerManager() {
         this.playerMap = new HashMap<>();
     }
@@ -16,4 +17,10 @@ public class PlayerManager implements Serializable {
     public Player getPlayer(String key) {
        return this.playerMap.get(key);
     }
+
+    public void print() {
+        for (Map.Entry<String,Player> entry : playerMap.entrySet())
+            System.out.println(entry.getValue());
+    }
+
 }

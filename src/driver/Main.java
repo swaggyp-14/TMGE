@@ -21,12 +21,5 @@ public class Main {
         PlayerManager pm = new PlayerManager();
         pm.addPlayer(p1.getUsername(), p1);
         pm.addPlayer(p2.getUsername(), p2);
-        //test write
-        util.savePlayers(pm, "players");
-        System.out.println("Serialized");
-        //Read
-        PlayerManager pm2 = util.loadPlayers("players");
-        System.out.println(pm2.getPlayer("A1"));
-        System.out.println(pm2.getPlayer("A2"));
     }
 }

@@ -20,10 +20,14 @@ import java.io.IOException;
 public class Login {
     private HBox loginBox;
     private HBox registerBox;
-
+    private PlayerManager pm;
+    private FileUtility util;
+    public Login() throws IOException, ClassNotFoundException {
+        util = new FileUtility();
+        pm = util.loadPlayers();
+    }
     public void createAccount(String username) throws IOException, ClassNotFoundException {
-        FileUtility util = new FileUtility();
-        PlayerManager pm;
+        util = new FileUtility();
         try {
             pm = util.loadPlayers();
         } catch (FileNotFoundException e) {
@@ -32,7 +36,7 @@ public class Login {
         }
         pm.addPlayer(username, new Player(username));
         util.savePlayers(pm);
-        pm.print();
+        pm.printAllPlayers(); // temp
     }
     public Stage getStage() {
         // Start Login Element
@@ -46,11 +50,14 @@ public class Login {
         loginBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // Serialize the active user, the next screen reads it and displays the info
-                // Also make sure the login ID is in PlayerManager
+                if (pm.isValidPlayer(loginField.getText())) { //Login is valid
+                    pm.setActivePlayer(pm.getPlayer(loginField.getText()));
+                    System.out.println(pm.getActivePlayer());
+                } else {
+                    System.out.println("User does not exist. Register an account");
+                }
                 stage.close();
-                System.out.println(loginField.getText());
-                new Login().getStage().show(); // Replace this
+                //new Login().getStage().show(); // Replace this w/ Player screen
             }
         });
 

@@ -24,7 +24,6 @@ public class Login {
     private FileUtility util;
     public Login() throws IOException, ClassNotFoundException {
         util = new FileUtility();
-        util.savePlayers(util.loadPlayers());
         pm = util.loadPlayers();
     }
     public void createAccount(String username) throws IOException, ClassNotFoundException {

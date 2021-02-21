@@ -15,7 +15,12 @@ public class FileUtility {
     public PlayerManager loadPlayers() throws IOException, ClassNotFoundException {
         //If file not exist, make
         FileInputStream file;
-        file = new FileInputStream("players");
+        try {
+            file = new FileInputStream("players");
+        } catch (Exception e) {
+            savePlayers(new PlayerManager());
+            file = new FileInputStream("players");
+        }
         ObjectInputStream in = new ObjectInputStream(file);
         PlayerManager pm = (PlayerManager)in.readObject();
         in.close();

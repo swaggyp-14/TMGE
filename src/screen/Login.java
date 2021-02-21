@@ -1,5 +1,5 @@
 package screen;
-import javafx.application.Application;
+import facade.LoginFacade;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,33 +10,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import player.Player;
-import player.PlayerManager;
-import util.FileUtility;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Login {
     private HBox loginBox;
     private HBox registerBox;
-    private PlayerManager pm;
-    private FileUtility util;
+    private LoginFacade loginFacade;
     public Login() throws IOException, ClassNotFoundException {
-        util = new FileUtility();
-        pm = util.loadPlayers();
-    }
-    public void createAccount(String username) throws IOException, ClassNotFoundException {
-        util = new FileUtility();
-        try {
-            pm = util.loadPlayers();
-        } catch (FileNotFoundException e) {
-            pm = new PlayerManager();
-            util.savePlayers(pm);
-        }
-        pm.addPlayer(username, new Player(username));
-        util.savePlayers(pm);
-        pm.printAllPlayers(); // temp
+        loginFacade = new LoginFacade();
     }
     public Stage getStage() {
         // Start Login Element
@@ -45,19 +26,13 @@ public class Login {
         loginBox = new HBox();
         Label loginLabel = new Label("Login ID:");
         TextField loginField = new TextField();
-        Button loginBtn = new Button();
-        loginBtn.setText("Login");
+        Button loginBtn = new Button("Login");
         loginBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (pm.isValidPlayer(loginField.getText())) { //Login is valid
-                    pm.setActivePlayer(pm.getPlayer(loginField.getText()));
-                    System.out.println(pm.getActivePlayer());
-                } else {
-                    System.out.println("User does not exist. Register an account");
-                }
+                loginFacade.handleLogin(loginField.getText());
                 stage.close();
-                //new Login().getStage().show(); // Replace this w/ Player screen
+                loginFacade.goPlayerScreen();
             }
         });
 
@@ -69,13 +44,12 @@ public class Login {
         registerBox = new HBox();
         Label regLabel = new Label("New? Register Login ID:");
         TextField regField = new TextField();
-        Button regBtn = new Button();
-        regBtn.setText("Register");
+        Button regBtn = new Button("Register");
         regBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    createAccount(regField.getText());
+                    loginFacade.createAccount(regField.getText());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

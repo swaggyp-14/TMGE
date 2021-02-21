@@ -9,7 +9,6 @@ import java.util.Map;
 public class Player implements Serializable {
     private String username;
     private Map<String, Integer> highScore;
-    private int maxScore;
     private int wins;
     private int loses;
     private List<String> gamesPlayed;
@@ -24,14 +23,6 @@ public class Player implements Serializable {
 
     public String getUsername() {
         return username;
-    }
-
-    public int getMaxScore() {
-        return maxScore;
-    }
-
-    public void setMaxScore(int maxScore) {
-        this.maxScore = maxScore;
     }
 
     public int getWins() {
@@ -50,11 +41,16 @@ public class Player implements Serializable {
         this.loses = loses;
     }
 
+    public void updateScore(String gameName, int score) {
+        if (highScore.get(gameName) < score) {
+            highScore.put(gameName, score);
+        }
+    }
+
     @Override
     public String toString() {
         return "Player{" +
                 "username='" + username + '\'' +
-                ", maxScore=" + maxScore +
                 ", wins=" + wins +
                 ", loses=" + loses +
                 ", gamesPlayed=" + gamesPlayed +

@@ -10,6 +10,7 @@ public class PlayerManager implements Serializable {
 
     public PlayerManager() {
         this.playerMap = new HashMap<>();
+        this.activePlayer = null;
     }
 
     public void addPlayer(String key, Player value) {

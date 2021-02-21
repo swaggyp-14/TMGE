@@ -2,10 +2,13 @@ package player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Player implements Serializable {
     private String username;
+    private Map<String, Integer> highScore;
     private int maxScore;
     private int wins;
     private int loses;
@@ -13,7 +16,7 @@ public class Player implements Serializable {
 
     public Player(String username) {
         this.username = username;
-        this.maxScore = 0;
+        this.highScore = new HashMap<>();
         this.wins = 0;
         this.loses = 0;
         this.gamesPlayed = new ArrayList<>();

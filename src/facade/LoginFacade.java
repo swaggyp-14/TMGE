@@ -2,7 +2,7 @@ package facade;
 
 import player.Player;
 import player.PlayerManager;
-import screen.PlayerStage;
+import screen.stages.PlayerStage;
 import util.FileUtility;
 
 import java.io.IOException;

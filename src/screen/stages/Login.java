@@ -1,4 +1,4 @@
-package screen;
+package screen.stages;
 import facade.LoginFacade;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;

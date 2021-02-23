@@ -1,4 +1,4 @@
-package screen;
+package screen.stages;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import player.PlayerManager;
 
@@ -20,8 +19,8 @@ public class PlayerStage {
         Stage stage = new Stage();
         stage.setTitle("Player Screen");
         Label playerName = new Label("Player name: " + this.pm.getActivePlayer().getUsername());
-        Label playerWins = new Label("Total Wins: " + Integer.toString(this.pm.getActivePlayer().getWins()));
-        Label playerLose = new Label("Total Losses: " + Integer.toString(this.pm.getActivePlayer().getLoses()));
+        Label playerWins = new Label("Total Wins: " + this.pm.getActivePlayer().getWins());
+        Label playerLose = new Label("Total Losses: " + this.pm.getActivePlayer().getLoses());
         Button launchBejeweled = new Button("Launch Bejeweled");
         launchBejeweled.setOnAction(new EventHandler<ActionEvent>() {
             @Override

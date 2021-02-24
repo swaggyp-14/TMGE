@@ -9,11 +9,24 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import player.PlayerManager;
+import util.FileUtility;
+
+import java.io.IOException;
 
 public class PlayerStage implements IStage{
     private PlayerManager pm;
+    private FileUtility util;
     public PlayerStage(PlayerManager pm) {
         this.pm = pm;
+        util = new FileUtility();
+    }
+    public void save(String game) {
+        try {
+            pm.getActivePlayer().addGamesPlayed(game);
+            util.savePlayers(pm);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     public Stage getStage() {
         Stage stage = new Stage();
@@ -27,6 +40,7 @@ public class PlayerStage implements IStage{
             public void handle(ActionEvent event) {
                 // TODO Implement game
                 System.out.println("Launching Bejeweled");
+                save("Bejeweled");
             }
         });
         Button launchCandyCrush = new Button("Launch Candy Crush");
@@ -35,6 +49,7 @@ public class PlayerStage implements IStage{
             public void handle(ActionEvent event) {
                 // TODO Implement game
                 System.out.println("Launching Candy Crush");
+                save("Candy Crush");
             }
         });
         // Set Pane

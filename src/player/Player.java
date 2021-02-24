@@ -1,24 +1,21 @@
 package player;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Player implements Serializable {
     private String username;
     private Map<String, Integer> highScore;
     private int wins;
     private int loses;
-    private List<String> gamesPlayed;
+    private Set<String> gamesPlayed;
 
     public Player(String username) {
         this.username = username;
         this.highScore = new HashMap<>();
         this.wins = 0;
         this.loses = 0;
-        this.gamesPlayed = new ArrayList<>();
+        this.gamesPlayed = new HashSet<>();
     }
 
     public String getUsername() {
@@ -45,6 +42,10 @@ public class Player implements Serializable {
         if (highScore.get(gameName) < score) {
             highScore.put(gameName, score);
         }
+    }
+
+    public void addGamesPlayed(String gameName) {
+        this.gamesPlayed.add(gameName);
     }
 
     @Override

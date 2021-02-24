@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import player.PlayerManager;
 
-public class PlayerStage {
+public class PlayerStage implements IStage{
     private PlayerManager pm;
     public PlayerStage(PlayerManager pm) {
         this.pm = pm;

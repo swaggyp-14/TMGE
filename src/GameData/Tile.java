@@ -1,4 +1,4 @@
-import java.util.*;
+package GameData;
 
 class Tile {
 

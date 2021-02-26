@@ -5,16 +5,14 @@ import javax.swing.JLabel;
 import javax.swing.JButton; //imports JButton library
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridLayout; //imports GridLayout library
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class Game  extends JFrame {
-	static int WIDTH = 1000; 
-	static int HEIGHT = 1000;
+	static int WIDTH = 1000;
+	static int HEIGHT = 600;
 	private static final int FIELD_WIDTH = 10;
 	private JLabel playerLabel;
 	private JLabel scoreLabel;
@@ -144,20 +142,17 @@ public class Game  extends JFrame {
 	
 	private Component makeGrid(int rows, int columns) {
 		//making the grid in the middle
+		Random rand = new Random();
+		int maxRand = 5;
+		Color colors[] = {Color.red, Color.blue, Color.yellow, Color.green, Color.pink, Color.black};
 		JPanel frame = new JPanel();
 		frame.setLayout(new GridLayout(rows, columns));
 		for ( int i = 0; i < rows; i++ ) {
 			for ( int j = 0; j < columns; j++ ) {
 				JButton btn = new JButton();
-				int r = (int)(Math.random() * 256);
-				int g = (int)(Math.random() * 256);
-				int b = (int)(Math.random() * 256);
-				btn.setBackground(new Color(r,g,b));
-				
+				btn.setBackground(colors[rand.nextInt(maxRand)]);
 				tileClickedEvent(btn);
-				
 				btn.setName(String.format("%d,%d",i,j));
-				
 				frame.add(btn);
 			}			
 		}

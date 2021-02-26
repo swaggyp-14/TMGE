@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class Game  extends JFrame {
+public class Game extends JFrame {
 	static int WIDTH = 1000;
 	static int HEIGHT = 600;
 	private static final int FIELD_WIDTH = 10;
@@ -21,13 +21,11 @@ public class Game  extends JFrame {
 	private JButton quit;
 	private JButton newGame;
 	private JButton statistics;
-	private JButton[][] tileGrid;
 	private boolean tileClicked = false;
 	
 	
 	
 	public Game(int rows, int columns) {
-		tileGrid = new JButton[rows][columns];
 		
 		setLayout(new BorderLayout()); //setting layout
 		createLeftComponents(); //creating player + score components

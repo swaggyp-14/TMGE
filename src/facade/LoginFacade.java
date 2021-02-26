@@ -29,7 +29,7 @@ public class LoginFacade {
     private void handleSingleLogin(String username) {
         System.out.println("One login");
         if (pm.isValidPlayer(username)) { //Login is valid
-            pm.setActivePlayer(pm.getPlayer(username));
+            pm.addPlayerQueue(pm.getPlayer(username));
             System.out.println(pm.getActivePlayer());
         } else {
             System.out.println("User does not exist. Register an account");
@@ -38,8 +38,8 @@ public class LoginFacade {
     private void handleDualLogin(String u1, String u2) {
         System.out.println("Two logins");
         if (pm.isValidPlayer(u1) && pm.isValidPlayer(u2)) {
-            pm.setActivePlayer(pm.getPlayer(u1));
-            pm.setPlayerTwo(pm.getPlayer(u2));
+            pm.addPlayerQueue(pm.getPlayer(u1));
+            pm.addPlayerQueue(pm.getPlayer(u2));
         } else {
             System.out.println("One of the users are not valid. Register an account(s)");
         }

@@ -24,8 +24,8 @@ public class PlayerStage implements IStage{
         try {
             pm.getActivePlayer().addGamesPlayed(game);
             util.savePlayers(pm);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Unable to save");
         }
     }
     public Stage getStage() {

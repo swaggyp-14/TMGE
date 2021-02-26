@@ -10,7 +10,7 @@ public class TileMap {
 
     private int row, column;
 
-    TileMap(int r, int c) {
+    public TileMap(int r, int c) {
         this.row = r;
 
         this.column = c;
@@ -21,6 +21,10 @@ public class TileMap {
 
     public Tile[][] getTable() {
         return table;
+    }
+
+    public Tile getTile(int i, int j) {
+        return this.table[i][j];
     }
 
     public int getRow() {
@@ -34,6 +38,7 @@ public class TileMap {
     public int getColumn() {
         return column;
     }
+
 
     public void setColumn(int column) {
         this.column = column;
@@ -93,18 +98,27 @@ public class TileMap {
         }
     }
 
+    public void switchTiles(String prev, String next) {
+        String[] prevArr = prev.split(",");
+        String[] nextArr = next.split(",");
+        int prevX, prevY, nextX, nextY;
+        prevX = Integer.parseInt(prevArr[0]);
+        prevY = Integer.parseInt(prevArr[1]);
+        nextX = Integer.parseInt(nextArr[0]);
+        nextY = Integer.parseInt(nextArr[1]);
+        Tile temp = this.table[prevX][prevY];
+        this.table[prevX][prevY] = this.table[nextX][nextY];
+        this.table[nextX][nextY] = temp;
+    }
+
     public void updateBoard() {
         for (int x = 0; x < row; x++) {
             for (int y = 0; y < column; y++) {
                 if (this.table[x][y].getColor().equals("Match")) {
                     int current_row = x;
-
                     for (int z = current_row; z > 0; z--) {
-
                         this.table[z][y].setColor(this.table[z - 1][y].getColor());
-
                     }
-
                     this.table[0][y].setColor(chooseRandomTile());
                 }
             }

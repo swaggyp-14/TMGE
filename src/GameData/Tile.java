@@ -1,15 +1,15 @@
 package GameData;
 
-class Tile {
+public class Tile {
 
 	private int x;
 	private int y;
 	private String color;
 
-	Tile(int newX, int newY, String newColor) {
+	public Tile(int newX, int newY, String newColor) {
 		this.x = newX;
 		this.y = newY;
-		this.color = newColor; 
+		this.color = newColor;
 	}
 
 	public void setX(int x){
@@ -29,11 +29,11 @@ class Tile {
 	}
 
 	public int getY(){
-		return this.y; 
+		return this.y;
 	}
 
 	public String getColor(){
-		return this.color; 
+		return this.color;
 	}
 
 

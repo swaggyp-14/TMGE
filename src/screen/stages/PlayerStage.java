@@ -1,5 +1,6 @@
 package screen.stages;
 
+import engine.EngineAPI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -38,7 +39,16 @@ public class PlayerStage implements IStage{
         launchBejeweled.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                // TODO Implement game
+                // TODO Implement game. Testing code for now
+                EngineAPI api = new EngineAPI();
+                api.setTileDimensions(5,5);
+                try {
+                    api.initGame("Bejeweled");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                api.setScorePerClear(150);
+                api.launchGame();
                 System.out.println("Launching Bejeweled");
                 save("Bejeweled");
             }

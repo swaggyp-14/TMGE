@@ -19,23 +19,24 @@ public class LoginFacade {
         util.savePlayers(pm);
         pm.printAllPlayers();
     }
-    public void handleLogin(String username, String usernamePlayer2) {
+    public void handleLogin(String username, String usernamePlayer2) throws IOException {
         if (usernamePlayer2.equals("")) {
             handleSingleLogin(username);
         } else {
             handleDualLogin(username, usernamePlayer2);
         }
     }
-    private void handleSingleLogin(String username) {
+    private void handleSingleLogin(String username) throws IOException {
         System.out.println("One login");
         if (pm.isValidPlayer(username)) { //Login is valid
             pm.addPlayerQueue(pm.getPlayer(username));
-            System.out.println(pm.getActivePlayer());
+            System.out.println(pm.getPlayer(username));
         } else {
             System.out.println("User does not exist. Register an account");
         }
+        util.savePlayers(pm);
     }
-    private void handleDualLogin(String u1, String u2) {
+    private void handleDualLogin(String u1, String u2) throws IOException {
         System.out.println("Two logins");
         if (pm.isValidPlayer(u1) && pm.isValidPlayer(u2)) {
             pm.addPlayerQueue(pm.getPlayer(u1));
@@ -43,6 +44,7 @@ public class LoginFacade {
         } else {
             System.out.println("One of the users are not valid. Register an account(s)");
         }
+        util.savePlayers(pm);
     }
     public PlayerManager getPlayerManager() {
         return this.pm;

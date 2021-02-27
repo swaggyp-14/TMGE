@@ -1,7 +1,7 @@
 package game;
 
-import GameData.Tile;
 import GameData.TileMap;
+import facade.GameFacade;
 
 import javax.swing.JFrame; //imports JFrame library
 import javax.swing.JLabel;
@@ -11,12 +11,16 @@ import javax.swing.JTextField;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.Random;
+import java.util.Map;
 
 public class Game extends JFrame {
 	static int WIDTH = 1000;
 	static int HEIGHT = 600;
+	private String gameName;
+	private GameFacade gf;
+	private int scorePerClear;
 	private static final int FIELD_WIDTH = 10;
 	private JLabel playerLabel;
 	private JLabel scoreLabel;
@@ -29,42 +33,39 @@ public class Game extends JFrame {
 	private TileMap map;
 	private JPanel TileFrame;
 	private String previousTile;
-	public Game(int rows, int columns) {
+	private Map<String, Color> colorMap;
+	private JPanel parentPanel;
 
-		setLayout(new BorderLayout()); //setting layout
-		createLeftComponents(); //creating player + score components
-		createRightComponents(); //creating quit/stats/new game buttons
-
-		JPanel result = new JPanel(); //new panel
-		result.setLayout(new BorderLayout());
-		result.add(createLeftPanel(), BorderLayout.WEST);
-		result.add(createRightPanel(), BorderLayout.EAST);
-		result.add(makeGrid(), BorderLayout.CENTER);
-		add(result);
-		setSize(WIDTH, HEIGHT);
-
-	}
-
-	public Game(GameData.TileMap map) {
+	public Game(String gameName, TileMap map) throws Exception {
+		this.gameName = gameName;
+		gf = new GameFacade();
+		// TODO - Make this customizable thru API
+		this.colorMap = new HashMap<String, Color>();
+		colorMap.put("R", Color.RED);
+		colorMap.put("B", Color.BLUE);
+		colorMap.put("P", Color.pink);
+		colorMap.put("Y", Color.yellow);
+		colorMap.put("G", Color.GREEN);
+		colorMap.put("O", Color.orange);
 		this.map = map;
 		this.map.fillBoard();
 
-
 		setLayout(new BorderLayout()); //setting layout
 		createLeftComponents(); //creating player + score components
 		createRightComponents(); //creating quit/stats/new game buttons
 
-		JPanel result = new JPanel(); //new panel
-		result.setLayout(new BorderLayout());
-		result.add(createLeftPanel(), BorderLayout.WEST);
-		result.add(createRightPanel(), BorderLayout.EAST);
-		result.add(makeGrid(), BorderLayout.CENTER);
-		add(result);
+		parentPanel = new JPanel(); //new panel
+		parentPanel.setLayout(new BorderLayout());
+		parentPanel.add(createLeftPanel(), BorderLayout.WEST);
+		parentPanel.add(createRightPanel(), BorderLayout.EAST);
+		parentPanel.add(makeGrid(), BorderLayout.CENTER);
+		add(parentPanel);
 		setSize(WIDTH, HEIGHT);
 
 	}
-
-
+	public void setScorePerClear(int score) {
+		this.scorePerClear = score;
+	}
 	private Component createLeftPanel() {
 		//creates left panel with the player text box + input box
 		JPanel player = new JPanel();
@@ -88,40 +89,65 @@ public class Game extends JFrame {
 		//player name
 		playerLabel = new JLabel("PLAYER: ");
 		playerField = new JTextField(FIELD_WIDTH);
-		playerField.setText("");
+		playerField.setText(this.gf.getUserID());
 
 		//player score
 		scoreLabel = new JLabel("SCORE: ");
 		scoreField = new JTextField(FIELD_WIDTH);
-		scoreField.setText("");
+		scoreField.setText("0");
 	}
 
-	private JButton makeQuitButton() {
-		JButton btn = new JButton("QUIT");
+	private JButton makeQuitButton(GameFacade gf, JFrame f, String gameName) {
+		JButton btn = new JButton("Quit Program");
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("quitting game");
+				try {
+					gf.handleExit(gameName);
+					f.dispose();
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				}
 			}
 		});
 
 		return btn;
 	}
 
-	private JButton makeNGButton() {
-		JButton btn = new JButton("NEW GAME");
+	private JButton makeNGButton(GameFacade gf, String gameName) {
+		JButton btn;
+		if (gf.hasNextPlayer()) {
+			btn = new JButton("Next Player");
+		} else {
+			btn = new JButton("");
+		}
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("restarting game");
+				switch(e.getActionCommand()){
+					case "Next Player":
+						try {
+							gf.handleSwitch(gameName);
+						} catch (IOException ioException) {
+							ioException.printStackTrace();
+						}
+						playerField.setText(gf.getUserID());
+						scoreField.setText(gf.getScore());
+						if (gf.hasNextPlayer()) {
+							btn.setText("Next Player");
+						} else {
+							btn.setText("");
+						}
+
+				}
 			}
 		});
 
 		return btn;
 	}
 
-	private JButton makeStatsButton() {
-		JButton btn = new JButton("STATISTICS");
+	private JButton makeStatsButton(GameFacade gf) {
+		JButton btn = new JButton("Statistics");
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -134,9 +160,9 @@ public class Game extends JFrame {
 
 	private void createRightComponents() {
 		//creating the buttons on the right side
-		quit = makeQuitButton();
-		newGame = makeNGButton();
-		statistics = makeStatsButton();
+		quit = makeQuitButton(this.gf, this, this.gameName);
+		newGame = makeNGButton(this.gf, this.gameName);
+		statistics = makeStatsButton(this.gf);
 	}
 
 
@@ -162,16 +188,7 @@ public class Game extends JFrame {
 
 
 	private JPanel updateTiles() {
-		//making the grid in the middle
-		System.out.println(map);
 		TileFrame.removeAll();
-		HashMap<String, Color> colorMap = new HashMap<String, Color>();
-		colorMap.put("R", Color.RED);
-		colorMap.put("B", Color.BLUE);
-		colorMap.put("P", Color.pink);
-		colorMap.put("Y", Color.yellow);
-		colorMap.put("G", Color.GREEN);
-		colorMap.put("O", Color.orange);
 
 		TileFrame.setLayout(new GridLayout(map.getRow(), map.getColumn()));
 		for (int i = 0; i < map.getRow(); i++) {
@@ -184,20 +201,11 @@ public class Game extends JFrame {
 			}
 		}
 		TileFrame.setBackground(Color.RED);
-		System.out.println(map);
 		return TileFrame;
 	}
 
 
 	private Component makeGrid() {
-		//making the grid in the middle
-		HashMap<String, Color> colorMap = new HashMap<String, Color>();
-		colorMap.put("R", Color.RED);
-		colorMap.put("B", Color.BLUE);
-		colorMap.put("P", Color.pink);
-		colorMap.put("Y", Color.yellow);
-		colorMap.put("G", Color.GREEN);
-		colorMap.put("O", Color.orange);
 
 		TileFrame = new JPanel();
 		TileFrame.setLayout(new GridLayout(map.getRow(), map.getColumn()));
@@ -218,7 +226,6 @@ public class Game extends JFrame {
 		btn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(String.format("tile clicked at location: %s", btn.getName()));
 				tileClicked = !(tileClicked);
 				if (!tileClicked) {
 					map.switchTiles(previousTile, btn.getName());
@@ -227,22 +234,14 @@ public class Game extends JFrame {
 					updateTiles();
 					TileFrame.revalidate();
 					TileFrame.repaint();
-					previousTile = "";
+					previousTile = null;
+					gf.updateScore(scorePerClear);
+					scoreField.setText(gf.getScore());
 				} else {
 					previousTile = btn.getName();
 				}
 			}
 		});
 	}
-
-
-	public static void main(String[] args) {
-
-		JFrame frame = new Game(new TileMap(5, 5));
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-	}
-
 
 }

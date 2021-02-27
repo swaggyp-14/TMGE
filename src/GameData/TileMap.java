@@ -15,9 +15,7 @@ public class TileMap {
 
     public TileMap(int r, int c) {
         this.row = r;
-
         this.column = c;
-
         this.table = new Tile[r][c];
 
     }

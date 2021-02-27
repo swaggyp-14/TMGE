@@ -47,8 +47,14 @@ public class PlayerManager implements Serializable {
         }
         return false;
     }
+    public void setQueue(LinkedList<Player> q) {
+        this.playerQueue = q;
+    }
+    public Queue<Player> getQueue() {
+        return this.playerQueue;
+    }
     public void printAllPlayers() {
         for (Map.Entry<String, Player> entry : playerMap.entrySet())
-            System.out.println(entry.getValue());
+            System.out.println("!!" + entry.getValue());
     }
 }

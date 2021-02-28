@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Game extends JFrame {
-	static int WIDTH = 1000;
-	static int HEIGHT = 600;
+	private int width;
+	private int height;
 	private String gameName;
 	private GameFacade gf;
 	private int scorePerClear;
@@ -54,14 +54,22 @@ public class Game extends JFrame {
 		createLeftComponents(); //creating player + score components
 		createRightComponents(); //creating quit/stats/new game buttons
 
+	}
+	public void setGameDimensions(int width, int height) {
+		this.width = width;
+		this.height = height;
+	}
+	public void setGameName() {
+		this.setTitle(this.gameName);
+	}
+	public void addAllComponents() {
 		parentPanel = new JPanel(); //new panel
 		parentPanel.setLayout(new BorderLayout());
 		parentPanel.add(createLeftPanel(), BorderLayout.WEST);
 		parentPanel.add(createRightPanel(), BorderLayout.EAST);
 		parentPanel.add(makeGrid(), BorderLayout.CENTER);
 		add(parentPanel);
-		setSize(WIDTH, HEIGHT);
-
+		setSize(this.width, this.height);
 	}
 	public void setScorePerClear(int score) {
 		this.scorePerClear = score;

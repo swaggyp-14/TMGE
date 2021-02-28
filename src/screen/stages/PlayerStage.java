@@ -47,6 +47,8 @@ public class PlayerStage implements IStage{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                api.setGameScreenSize(800, 500);
+                api.setGamePanels();
                 api.setScorePerClear(150);
                 api.launchGame();
                 System.out.println("Launching Bejeweled");

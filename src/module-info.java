@@ -3,4 +3,5 @@ module TMGE {
     requires javafx.controls;
     requires java.desktop;
     exports screen;
+    exports engine;
 }

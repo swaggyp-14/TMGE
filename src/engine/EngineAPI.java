@@ -12,6 +12,14 @@ public class EngineAPI {
     public EngineAPI() {
     }
 
+    public void setTileMap(TileMap tm) {
+        this.tileMap = tm;
+    }
+
+    public TileMap getTileMap() {
+        return this.tileMap;
+    }
+
     public void setTileDimensions(int rows, int cols) {
         this.tileMap = new TileMap(rows, cols);
     }

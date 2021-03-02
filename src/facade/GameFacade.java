@@ -22,6 +22,13 @@ public class GameFacade {
         int currScore = pm.getActivePlayer().getCurrScore();
         this.pm.getActivePlayer().setCurrScore(currScore + score);
     }
+    public int getPreviousHigh(String gameName) {
+        try {
+            return this.pm.getActivePlayer().getHighScoreMap().get(gameName);
+        } catch (Exception e){
+            return 0;
+        }
+    }
     public String getScore() {
         return Integer.toString(this.pm.getActivePlayer().getCurrScore());
     }

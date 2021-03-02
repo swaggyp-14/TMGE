@@ -9,10 +9,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import player.Player;
 import player.PlayerManager;
 import util.FileUtility;
 
 import java.io.IOException;
+import java.util.Queue;
 
 public class PlayerStage implements IStage{
     private PlayerManager pm;
@@ -51,7 +53,6 @@ public class PlayerStage implements IStage{
                 api.setGamePanels();
                 api.setScorePerClear(150);
                 api.launchGame();
-                System.out.println("Launching Bejeweled");
                 save("Bejeweled");
             }
         });

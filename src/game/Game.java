@@ -24,6 +24,7 @@ public class Game extends JFrame {
 	private static final int FIELD_WIDTH = 10;
 	private JLabel playerLabel;
 	private JLabel scoreLabel;
+	private JLabel prevHighLabel;
 	private JTextField playerField;
 	private JTextField scoreField;
 	private JButton quit;
@@ -84,10 +85,13 @@ public class Game extends JFrame {
 		score.add(scoreLabel);
 		score.add(scoreField);
 
+		JPanel previousHigh = new JPanel();
+		previousHigh.add(prevHighLabel);
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4, 1));
 		panel.add(player);
 		panel.add(score);
+		panel.add(previousHigh);
 
 		return panel;
 	}
@@ -103,6 +107,8 @@ public class Game extends JFrame {
 		scoreLabel = new JLabel("SCORE: ");
 		scoreField = new JTextField(FIELD_WIDTH);
 		scoreField.setText("0");
+
+		prevHighLabel = new JLabel("Previous High Score: " + gf.getPreviousHigh(this.gameName));
 	}
 
 	private JButton makeQuitButton(GameFacade gf, JFrame f, String gameName) {

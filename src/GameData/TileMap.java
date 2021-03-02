@@ -67,9 +67,12 @@ public class TileMap {
 			{
 				if (this.table[x][y].getColor().equals(this.table[x+1][y].getColor()) && (this.table[x][y].getColor().equals(this.table[x+2][y].getColor())))
 				{
-					this.table[x][y].setColor("Match");
-					this.table[x+1][y].setColor("Match");
-					this.table[x+2][y].setColor("Match");
+					this.table[x][y].setMatch(true);
+					this.table[x+1][y].setMatch(true);
+					this.table[x+2][y].setMatch(true);
+//					this.table[x][y].setColor("Match");
+//					this.table[x+1][y].setColor("Match");
+//					this.table[x+2][y].setColor("Match");
 				}
 			}
 		}
@@ -80,9 +83,12 @@ public class TileMap {
 			{
 				if (this.table[x][y].getColor().equals(this.table[x][y+1].getColor()) && (this.table[x][y].getColor().equals(this.table[x][y+2].getColor())))
 				{
-					this.table[x][y].setColor("Match");
-					this.table[x][y+1].setColor("Match");
-					this.table[x][y+2].setColor("Match");
+					this.table[x][y].setMatch(true);
+					this.table[x][y+1].setMatch(true);
+					this.table[x][y+2].setMatch(true);
+//					this.table[x][y].setColor("Match");
+//					this.table[x][y+1].setColor("Match");
+//					this.table[x][y+2].setColor("Match");
 				}
 			}
 		}
@@ -94,7 +100,7 @@ public class TileMap {
 		{
 			for (int y = 0; y < column; y++)
 			{
-				if (this.table[x][y].getColor().equals("Match"))
+				if (this.table[x][y].getMatch())
 				{
 					int current_row = x;
 
@@ -102,10 +108,12 @@ public class TileMap {
 					{
 
 						this.table[z][y].setColor(this.table[z-1][y].getColor());
+						this.table[z][y].setMatch(this.table[z-1][y].getMatch());
 						
 					}
 					
 					this.table[0][y].setColor(chooseRandomTile());
+					this.table[0][y].setMatch(false);
 				}
 			}
 		}
@@ -116,8 +124,13 @@ public class TileMap {
 //		TileMap t = new TileMap(7,7);
 //		
 //		t.fillBoard();
-//		System.out.println(t.toString());
+//		//System.out.println(t.toString());
 //		
+//		t.table[4][0].setColor("B");
+//		t.table[1][0].setColor("B");
+//		t.table[2][0].setColor("B");
+//		t.table[3][0].setColor("B");
+//		System.out.println(t.toString());
 //		t.checkMatches();
 //		t.updateBoard();
 //		

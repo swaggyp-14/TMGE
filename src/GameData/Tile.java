@@ -5,6 +5,7 @@ public class Tile {
 	private int x;
 	private int y;
 	private String color;
+	private boolean isSpecial = false; 
 	
 	private boolean isMatched;
 
@@ -13,6 +14,14 @@ public class Tile {
 		this.y = newY;
 		this.color = newColor; 
 		this.isMatched = false;
+	}
+
+	public boolean getSpecial(){
+		return this.isSpecial; 
+	}
+
+	pubic void setSpecial(){
+		this.isSpecial = true; 
 	}
 
 	public boolean getMatch()

@@ -1,17 +1,18 @@
-package GameData;
-
+import java.awt.List;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-
 public class TileMap {
-
+	
 	public Tile[][] table;
 	
 	private int row, column;
 	
-	public TileMap(int r, int c)
+	private String switched_color;
+	
+	TileMap(int r, int c)
 	{
 		this.row = r;
 		
@@ -119,33 +120,7 @@ public class TileMap {
 			}
 		}
 	}
-
-
-    public Tile[][] getTable() {
-        return table;
-    }
-
-    public Tile getTile(int i, int j) {
-        return this.table[i][j];
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getColumn() {
-        return column;
-    }
-
-
-    public void setColumn(int column) {
-        this.column = column;
-    }
-
+	
     public void switchTiles(String prev, String next) {
         String[] prevArr = prev.split(",");
         String[] nextArr = next.split(",");
@@ -155,8 +130,116 @@ public class TileMap {
         nextX = Integer.parseInt(nextArr[0]);
         nextY = Integer.parseInt(nextArr[1]);
         Tile temp = this.table[prevX][prevY];
+        
+        if (temp.getColor().equals("COLORMATCH"))
+        {
+        	this.switched_color = this.table[nextX][nextY].getColor();
+        }
+        
+        else if (this.table[nextX][nextY].getColor().equals("COLORMATCH"))
+        {
+        	this.switched_color = temp.getColor();
+        }
+        
         this.table[prevX][prevY] = this.table[nextX][nextY];
         this.table[nextX][nextY] = temp;
     }
-
+	
+    public void handleSpecial(Tile t)
+    {
+    	if (t.getSpecial())
+    	{
+    		if (t.getColor().equals("COLORMATCH"))
+    		{
+    			for (int x =0; x < row; x++)
+    			{
+    				for (int y =0; y < column; y++)
+    				{
+    					if (this.table[x][y].getColor().equals(this.switched_color))
+    					{
+    						this.table[x][y].setMatch(true);
+    					}
+    				}
+    			}
+    		}
+    		
+    		else if (t.getColor().equals("CROSS"))
+    		{
+    			int selected_row = t.getX();
+    			
+    			int selected_column = t.getY();
+    			
+    			for (int y = 0; y < column; y++)
+    			{
+    				this.table[selected_row][y].setMatch(true);
+    			}
+    			
+    			for (int x = 0; x < row; x++)
+    			{
+    				this.table[x][selected_column].setMatch(true);
+    			}
+    		}
+    		
+//    		else if (t.getColor().equals("BOX"))
+//    		{
+//    			int selected_row = t.getX();
+//    			
+//    			int selected_column = t.getY();
+//    			
+//    			if (selected_column == 0)
+//    			{
+//    				if (selected_row == 0)
+//    				{
+//    					this.table[0][0].setMatch(true);
+//    					this.table[0][1].setMatch(true);
+//    					this.table[1][0].setMatch(true);
+//    					this.table[1][1].setMatch(true);
+//    				}
+//    				
+//    				if (selected_row == this.row-1)
+//    				{
+//    					this.table[selected_row][selected_column].setMatch(true);
+//    					this.table[selected_row-1][selected_column].setMatch(true);
+//    					this.table[selected_row-1][selected_column-1].setMatch(true);
+//    					this.table[selected_row][selected_column].setMatch(true);
+//    				}
+//    			}
+//    			
+//    			if (selected_column == this.column-1)
+//    			{
+//    				if (selected_row == 0)
+//    				{
+//    					this.table[selected_row][selected_column].setMatch(true);
+//    					this.table[selected_row][selected_column-1].setMatch(true);
+//    					this.table[selected_row+][selected_column].setMatch(true);
+//    					this.table[selected_row-1][selected_column-1].setMatch(true);
+//    				}
+//    				
+//    				if (selected_row)
+//    			}
+//    		}
+    		
+    		
+    	}
+    }
+//	public static void main(String[] args)
+//	{
+//		TileMap t = new TileMap(7,7);
+//		
+//		t.fillBoard();
+//		//System.out.println(t.toString());
+//		
+//		t.table[4][0].setColor("B");
+//		t.table[1][0].setColor("B");
+//		t.table[2][0].setColor("B");
+//		t.table[3][0].setColor("B");
+//		System.out.println(t.toString());
+//		t.checkMatches();
+//		t.updateBoard();
+//		
+//		System.out.println("Updated Board");
+//		System.out.println(t.toString());
+//		
+//	}
+	
 }

@@ -5,6 +5,7 @@ import java.util.*;
 
 public class Player implements Serializable {
     private String username;
+    private int currScore;
     private Map<String, Integer> highScore;
     private int wins;
     private int loses;
@@ -13,6 +14,7 @@ public class Player implements Serializable {
     public Player(String username) {
         this.username = username;
         this.highScore = new HashMap<>();
+        this.currScore = 0;
         this.wins = 0;
         this.loses = 0;
         this.gamesPlayed = new HashSet<>();
@@ -22,6 +24,13 @@ public class Player implements Serializable {
         return username;
     }
 
+    public int getCurrScore() {
+        return currScore;
+    }
+
+    public void setCurrScore(int currScore) {
+        this.currScore = currScore;
+    }
     public int getWins() {
         return wins;
     }
@@ -37,10 +46,17 @@ public class Player implements Serializable {
     public void setLoses(int loses) {
         this.loses = loses;
     }
-
+    public Map<String, Integer> getHighScoreMap() {
+        return this.highScore;
+    }
     public void updateScore(String gameName, int score) {
-        if (highScore.get(gameName) < score) {
-            highScore.put(gameName, score);
+        try {
+            if (highScore.get(gameName) < score) {
+                highScore.put(gameName, score);
+            }
+        } catch (Exception e) {
+            highScore.put(gameName, 0);
+            updateScore(gameName, score);
         }
     }
 
@@ -52,6 +68,8 @@ public class Player implements Serializable {
     public String toString() {
         return "Player{" +
                 "username='" + username + '\'' +
+                ", currScore=" + currScore +
+                ", highScore=" + highScore +
                 ", wins=" + wins +
                 ", loses=" + loses +
                 ", gamesPlayed=" + gamesPlayed +

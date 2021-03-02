@@ -2,17 +2,17 @@ package player;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 public class PlayerManager implements Serializable {
     private Map<String, Player> playerMap;
-    private Player activePlayer;
-    private Player playerTwo;
+    private Queue<Player> playerQueue;
 
     public PlayerManager() {
         this.playerMap = new HashMap<>();
-        this.activePlayer = null;
-        this.playerTwo = null;
+        this.playerQueue = new LinkedList<>();
     }
     public void addPlayer(String key, Player value) {
         this.playerMap.put(key, value);
@@ -30,31 +30,31 @@ public class PlayerManager implements Serializable {
         }
         return true;
     }
-    public void setActivePlayer(Player p){
-        this.activePlayer = p;
+    public void addPlayerQueue(Player player) {
+        this.playerQueue.add(player);
     }
     public Player getActivePlayer() {
-        return this.activePlayer;
-    }
-    public Player getPlayerTwo() {
-        return playerTwo;
-    }
-    public void setPlayerTwo(Player playerTwo) {
-        this.playerTwo = playerTwo;
+        return this.playerQueue.peek();
     }
     public void switchPlayers() {
-        Player temp = activePlayer;
-        activePlayer = playerTwo;
-        playerTwo = temp;
+        if (this.playerQueue.size() != 0) {
+            this.playerQueue.poll();
+        }
     }
     public boolean isSinglePlayer() {
-        if(playerTwo.equals(null)){
+        if (this.playerQueue.size() == 1) {
             return true;
         }
         return false;
     }
+    public void setQueue(LinkedList<Player> q) {
+        this.playerQueue = q;
+    }
+    public Queue<Player> getQueue() {
+        return this.playerQueue;
+    }
     public void printAllPlayers() {
         for (Map.Entry<String, Player> entry : playerMap.entrySet())
-            System.out.println(entry.getValue());
+            System.out.println("!!" + entry.getValue());
     }
 }

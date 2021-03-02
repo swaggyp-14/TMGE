@@ -1,6 +1,6 @@
-import java.util.*;
+package GameData;
 
-class Tile {
+public class Tile {
 
 	private int x;
 	private int y;
@@ -8,11 +8,15 @@ class Tile {
 	
 	private boolean isMatched;
 
-	Tile(int newX, int newY, String newColor) {
+	public Tile(int newX, int newY, String newColor) {
 		this.x = newX;
 		this.y = newY;
+<<<<<<< HEAD
 		this.color = newColor; 
 		this.isMatched = false;
+=======
+		this.color = newColor;
+>>>>>>> 9440484be90dea309dbebdfbed2c4772a4fbc343
 	}
 
 	public boolean getMatch()
@@ -41,11 +45,11 @@ class Tile {
 	}
 
 	public int getY(){
-		return this.y; 
+		return this.y;
 	}
 
 	public String getColor(){
-		return this.color; 
+		return this.color;
 	}
 
 

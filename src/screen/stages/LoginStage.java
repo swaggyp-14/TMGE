@@ -32,7 +32,11 @@ public class LoginStage implements IStage{
         loginBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                loginFacade.handleLogin(loginField.getText(), loginFieldPlayer2.getText());
+                try {
+                    loginFacade.handleLogin(loginField.getText(), loginFieldPlayer2.getText());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 stage.close();
                 loginFacade.goPlayerScreen();
             }

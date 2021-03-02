@@ -20,7 +20,7 @@ public class Tile {
 		return this.isSpecial; 
 	}
 
-	pubic void setSpecial(){
+	public void setSpecial(){
 		this.isSpecial = true; 
 	}
 

@@ -1,3 +1,5 @@
+package GameData;
+
 import java.awt.List;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ public class TileMap {
 	
 	private String switched_color;
 	
-	TileMap(int r, int c)
+	public TileMap(int r, int c)
 	{
 		this.row = r;
 		
@@ -21,7 +23,30 @@ public class TileMap {
 		this.table = new Tile[r][c];
 		
 	}
-	
+	public Tile[][] getTable() {
+		return table;
+	}
+
+	public Tile getTile(int i, int j) {
+		return this.table[i][j];
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getColumn() {
+		return column;
+	}
+
+
+	public void setColumn(int column) {
+		this.column = column;
+	}
 	public String chooseRandomTile()
 	{
 		ArrayList<String> givenTiles = new ArrayList<String> (Arrays.asList("B", "R", "G", "Y", "O", "P"));

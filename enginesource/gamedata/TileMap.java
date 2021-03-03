@@ -41,7 +41,9 @@ public class TileMap {
 		return column;
 	}
 
-
+	public void placeTile(int x, int y, Tile t) {
+		this.table[x][y] = t;
+	}
 	public void setColumn(int column) {
 		this.column = column;
 	}

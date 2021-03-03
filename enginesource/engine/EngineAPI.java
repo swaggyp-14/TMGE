@@ -4,6 +4,7 @@ import gamedata.TileMap;
 import game.Game;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 
 public class EngineAPI {
@@ -43,6 +44,9 @@ public class EngineAPI {
     }
     public JFrame getFrame() {
         return game.getFrame();
+    }
+    public void addColor(String key, Color value) {
+        this.game.addColorEntry(key, value);
     }
     // TODO - Add more interfaces that the game needs to implement
 }

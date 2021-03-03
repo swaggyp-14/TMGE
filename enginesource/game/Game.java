@@ -55,6 +55,9 @@ public class Game extends JFrame {
 		createLeftComponents(); //creating player + score components
 		createRightComponents(); //creating quit/stats/new game buttons
 	}
+	public void addColorEntry(String key, Color value) {
+		this.colorMap.put(key, value);
+	}
 	public JFrame getFrame() {
 		return this;
 	}

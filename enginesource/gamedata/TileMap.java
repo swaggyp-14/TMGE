@@ -146,16 +146,15 @@ public class TileMap {
 
 
 	public boolean inbounds(int prevX, int prevY, int afterX, int afterY){
-		if(prevX + 1 != afterX || prevX - 1 != afterX || prevY + 1 != afterY || prevY - 1 != afterY ){
-			return false;
- 
+		if(prevX + 1 == afterX || prevX - 1 == afterX || prevY + 1 == afterY || prevY - 1 == afterY ){
+			return true;
 		}
-
-
-		return true;
+		return false;
 	}
 	
     public void switchTiles(String prev, String next) {
+		System.out.println(prev);
+		System.out.println(next);
         String[] prevArr = prev.split(",");
         String[] nextArr = next.split(",");
         int prevX, prevY, nextX, nextY;
@@ -180,7 +179,6 @@ public class TileMap {
 			}
         }
 		if(inbounds(prevX,prevY,nextX,nextY)){
-
 			this.table[prevX][prevY] = this.table[nextX][nextY];
 			this.table[nextX][nextY] = temp;
 			

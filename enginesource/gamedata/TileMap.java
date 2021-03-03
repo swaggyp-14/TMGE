@@ -143,6 +143,17 @@ public class TileMap {
 			}
 		}
 	}
+
+
+	public boolean inbounds(int prevX, int prevY, int afterX, int afterY){
+		if(prevX + 1 != afterX || prevX - 1 != afterX || prevY + 1 != afterY || prevY - 1 != afterY ){
+			return false;
+ 
+		}
+
+
+		return true;
+	}
 	
     public void switchTiles(String prev, String next) {
         String[] prevArr = prev.split(",");
@@ -156,16 +167,24 @@ public class TileMap {
         
         if (temp.getColor().equals("COLORMATCH"))
         {
-        	this.switched_color = this.table[nextX][nextY].getColor();
+			
+			if(inbounds(prevX,prevY,nextX,nextY)){
+				this.switched_color = this.table[nextX][nextY].getColor();
+			}
         }
         
         else if (this.table[nextX][nextY].getColor().equals("COLORMATCH"))
         {
-        	this.switched_color = temp.getColor();
+			if(inbounds(prevX,prevY,nextX,nextY)){
+				this.switched_color = temp.getColor();
+			}
         }
-        
-        this.table[prevX][prevY] = this.table[nextX][nextY];
-        this.table[nextX][nextY] = temp;
+		if(inbounds(prevX,prevY,nextX,nextY)){
+
+			this.table[prevX][prevY] = this.table[nextX][nextY];
+			this.table[nextX][nextY] = temp;
+			
+		}
     }
 	
     public void handleSpecial(Tile t)

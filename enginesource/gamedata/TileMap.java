@@ -155,8 +155,6 @@ public class TileMap {
 	}
 	
     public void switchTiles(String prev, String next) {
-		System.out.println(prev);
-		System.out.println(next);
         String[] prevArr = prev.split(",");
         String[] nextArr = next.split(",");
         int prevX, prevY, nextX, nextY;
@@ -267,10 +265,10 @@ public class TileMap {
 //	public static void main(String[] args)
 //	{
 //		TileMap t = new TileMap(7,7);
-//		
+//
 //		t.fillBoard();
 //		//System.out.println(t.toString());
-//		
+//
 //		t.table[4][0].setColor("B");
 //		t.table[1][0].setColor("B");
 //		t.table[2][0].setColor("B");
@@ -278,10 +276,10 @@ public class TileMap {
 //		System.out.println(t.toString());
 //		t.checkMatches();
 //		t.updateBoard();
-//		
+//
 //		System.out.println("Updated Board");
 //		System.out.println(t.toString());
-//		
+//
 //	}
 	
 }

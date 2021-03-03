@@ -6,37 +6,79 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-public class Bejeweled {
-    private String gameName = "Bejeweled";
+public class Bejeweled implements SpecialTileGame {
     private EngineAPI e;
     private TileMap map;
+    private String gameName;
     private String[] colors = {"COLORMATCH", "CROSS"};
-    // Randomly place special tiles before game begins
-    public void generateRandomSpecialTiles() {
-        int specialTiles = 2;
-        int rows = map.getRow();
-        int cols = map.getColumn();
-        Random random = new Random();
-        int randX = random.nextInt(rows);
-        int randY = random.nextInt(cols);
-        Tile t = new Tile(randX, randY, colors[random.nextInt(specialTiles)]);
-        map.placeTile(randX, randY, t);
+    private int rows, cols, specialTileCount;
+    private int width, height;
+    private Random random;
+
+    public void createGameInstance() {
+        e = new EngineAPI();
+    }
+
+    public void setGameName() {
+        this.gameName = "Bejeweled";
+
+    }
+
+    public void setGameInstance() {
+        try {
+            e.initGame(this.gameName);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public void setScreenDimensions() {
+        width = 1000;
+        height = 800;
+        e.setGameScreenSize(width, height);
+    }
+
+    public void setTileMap() {
+        rows = 8;
+        cols = 8;
+        e.setTileDimensions(rows, cols);
+    }
+    public void setupTileGen() {
+        specialTileCount = this.colors.length;
+        random = new Random();
+    }
+    public void generateSpecialTiles(int count) {
+        for(int i = 0; i < count; i++) {
+            int randX = random.nextInt(rows);
+            int randY = random.nextInt(cols);
+            Tile t = new Tile(randX, randY, colors[random.nextInt(specialTileCount)]);
+            map.placeTile(randX, randY, t);
+        }
+    }
+
+    public void addSpecialTiles(String name, Color color) {
+        map = e.getTileMap();
+        e.addColor(name, color);
+    }
+
+    public void setScorePerClear() {
+        e.setScorePerClear(150);
     }
     public JFrame getStage() throws Exception {
-        // TODO - Add more customizations etc later
-        e = new EngineAPI();
-        e.setTileDimensions(8, 8);
-        e.initGame(gameName);
-        map = e.getTileMap();
+        createGameInstance();
+        setGameName();
+        setTileMap();
+        setGameInstance();
+        setupTileGen();
         // Add special tiles
-        e.addColor("COLORMATCH", Color.cyan);
-        e.addColor("CROSS", Color.white);
-        for(int i = 0; i < 15; i++) {
-            generateRandomSpecialTiles();
-        }
-        e.setGameScreenSize(1000, 800);
+        addSpecialTiles("COLORMATCH", Color.cyan);
+        addSpecialTiles("CROSS", Color.white);
+        generateSpecialTiles(15);
+        setScreenDimensions();
+
         e.setGamePanels();
-        e.setScorePerClear(150);
+
+        setScorePerClear();
         return e.getFrame();
     }
 }

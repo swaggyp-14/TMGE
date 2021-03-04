@@ -4,6 +4,7 @@ import gamedata.TileMap;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.Random;
 
 public class Bejeweled implements SpecialTileGame {
@@ -15,7 +16,7 @@ public class Bejeweled implements SpecialTileGame {
     private int width, height;
     private Random random;
 
-    public void createGameInstance() {
+    public void createEngineInstance() {
         e = new EngineAPI();
     }
 
@@ -60,12 +61,20 @@ public class Bejeweled implements SpecialTileGame {
         map = e.getTileMap();
         e.addColor(name, color);
     }
-
+    public void initGamePanels() {
+        try {
+            e.setGamePanels();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        } catch (ClassNotFoundException classNotFoundException) {
+            classNotFoundException.printStackTrace();
+        }
+    }
     public void setScorePerClear() {
         e.setScorePerClear(150);
     }
-    public JFrame getStage() throws Exception {
-        createGameInstance();
+    public JFrame getFrame() throws Exception {
+        createEngineInstance();
         setGameName();
         setTileMap();
         setGameInstance();
@@ -73,11 +82,10 @@ public class Bejeweled implements SpecialTileGame {
         // Add special tiles
         addSpecialTiles("COLORMATCH", Color.cyan);
         addSpecialTiles("CROSS", Color.white);
+
         generateSpecialTiles(15);
         setScreenDimensions();
-
-        e.setGamePanels();
-
+        initGamePanels();
         setScorePerClear();
         return e.getFrame();
     }

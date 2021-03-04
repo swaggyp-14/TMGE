@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Bejeweled/Bejeweled.iml" filepath="$PROJECT_DIR$/Bejeweled/Bejeweled.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CandyCrush/CandyCrush.iml" filepath="$PROJECT_DIR$/CandyCrush/CandyCrush.iml" />
       <module fileurl="file://$PROJECT_DIR$/PlayerScreen/PlayerScreen.iml" filepath="$PROJECT_DIR$/PlayerScreen/PlayerScreen.iml" />
       <module fileurl="file://$PROJECT_DIR$/TMGE.iml" filepath="$PROJECT_DIR$/TMGE.iml" />
       <module fileurl="file://$PROJECT_DIR$/enginesource/player.iml" filepath="$PROJECT_DIR$/enginesource/player.iml" />

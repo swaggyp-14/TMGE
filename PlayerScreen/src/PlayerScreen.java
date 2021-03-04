@@ -11,7 +11,7 @@ public class PlayerScreen extends Application {
         /**
          * Handles the sub-routine of logging in and selecting active player.
          */
-        LoginStage loginStage = new LoginStage(loginFacade, new Bejeweled().getFrame(), new Bejeweled().getFrame());
+        LoginStage loginStage = new LoginStage(loginFacade, new Bejeweled().getFrame(), new CandyCrush().getFrame());
         loginStage.getStage().show();
     }
 }

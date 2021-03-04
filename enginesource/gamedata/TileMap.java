@@ -163,27 +163,177 @@ public class TileMap {
         nextX = Integer.parseInt(nextArr[0]);
         nextY = Integer.parseInt(nextArr[1]);
         Tile temp = this.table[prevX][prevY];
-        
-        if (temp.getColor().equals("COLORMATCH"))
-        {
-			
+
+		if ( Math.abs(prevX-nextX) > 1 || Math.abs(prevY-nextY) > 1 ) {
+			return;
+		}
+
+		if (temp.getColor().equals("COLORMATCH"))
+		{
 			if(inbounds(prevX,prevY,nextX,nextY)){
 				this.switched_color = this.table[nextX][nextY].getColor();
+				temp.setMatch(true);
+				special(temp.getColor(),nextX,nextY);
 			}
-        }
-        
-        else if (this.table[nextX][nextY].getColor().equals("COLORMATCH"))
-        {
+		}
+		else if (this.table[nextX][nextY].getColor().equals("COLORMATCH"))
+		{
 			if(inbounds(prevX,prevY,nextX,nextY)){
 				this.switched_color = temp.getColor();
+				this.table[nextX][nextY].setMatch(true);
+				special(this.table[nextX][nextY].getColor(),prevX,prevY);
 			}
-        }
+		}
+
+		if (temp.getColor().equals("XLINE"))
+		{
+			if(inbounds(prevX,prevY,nextX,nextY)){
+				temp.setMatch(true);
+				special(temp.getColor(),nextX,nextY);
+			}
+		}
+		else if (this.table[nextX][nextY].getColor().equals("XLINE"))
+		{
+			if(inbounds(prevX,prevY,nextX,nextY)){
+				this.switched_color = temp.getColor();
+				this.table[nextX][nextY].setMatch(true);
+				special(this.table[nextX][nextY].getColor(),prevX,prevY);
+			}
+		}
+		if (temp.getColor().equals("YLINE"))
+		{
+			if(inbounds(prevX,prevY,nextX,nextY)){
+				temp.setMatch(true);
+				special(temp.getColor(),nextX,nextY);
+			}
+		}
+		else if (this.table[nextX][nextY].getColor().equals("YLINE"))
+		{
+			if(inbounds(prevX,prevY,nextX,nextY)){
+				this.switched_color = temp.getColor();
+				this.table[nextX][nextY].setMatch(true);
+				special(this.table[nextX][nextY].getColor(),prevX,prevY);
+			}
+		}
+
+		if (temp.getColor().equals("CROSS"))
+		{
+			if(inbounds(prevX,prevY,nextX,nextY)){
+				temp.setMatch(true);
+				special(temp.getColor(),nextX,nextY);
+			}
+		}
+		else if (this.table[nextX][nextY].getColor().equals("CROSS"))
+		{
+			if(inbounds(prevX,prevY,nextX,nextY)){
+				this.switched_color = temp.getColor();
+				this.table[nextX][nextY].setMatch(true);
+				special(this.table[nextX][nextY].getColor(),prevX,prevY);
+			}
+		}
+
 		if(inbounds(prevX,prevY,nextX,nextY)){
 			this.table[prevX][prevY] = this.table[nextX][nextY];
 			this.table[nextX][nextY] = temp;
 			
 		}
-    }
+
+	}
+
+	public void special(String specialType, int newX, int newY)
+	{
+		if (specialType == "COLORMATCH")
+		{
+			for (int x =0; x < row; x++)
+			{
+				for (int y =0; y < column; y++)
+				{
+					if (this.table[x][y].getColor().equals(this.switched_color))
+					{
+						this.table[x][y].setMatch(true);
+					}
+				}
+			}
+		}
+
+		else if (specialType == "CROSS")
+		{
+			int selected_row = newX;
+
+			int selected_column = newY;
+
+			for (int y = 0; y < column; y++)
+			{
+				this.table[selected_row][y].setMatch(true);
+			}
+
+			for (int x = 0; x < row; x++)
+			{
+				this.table[x][selected_column].setMatch(true);
+			}
+		}
+
+		else if (specialType == "XLINE")
+		{
+			int selected_row = newX;
+
+			for (int y = 0; y < column; y++)
+			{
+				this.table[selected_row][y].setMatch(true);
+			}
+		}
+
+		else if (specialType == "YLINE")
+		{
+			int selected_column = newY;
+
+			for (int x = 0; x < row; x++)
+			{
+				this.table[x][selected_column].setMatch(true);
+			}
+		}
+
+//    		else if (t.getColor().equals("BOX"))
+//    		{
+//    			int selected_row = t.getX();
+//
+//    			int selected_column = t.getY();
+//
+//    			if (selected_column == 0)
+//    			{
+//    				if (selected_row == 0)
+//    				{
+//    					this.table[0][0].setMatch(true);
+//    					this.table[0][1].setMatch(true);
+//    					this.table[1][0].setMatch(true);
+//    					this.table[1][1].setMatch(true);
+//    				}
+//
+//    				if (selected_row == this.row-1)
+//    				{
+//    					this.table[selected_row][selected_column].setMatch(true);
+//    					this.table[selected_row-1][selected_column].setMatch(true);
+//    					this.table[selected_row-1][selected_column-1].setMatch(true);
+//    					this.table[selected_row][selected_column].setMatch(true);
+//    				}
+//    			}
+//
+//    			if (selected_column == this.column-1)
+//    			{
+//    				if (selected_row == 0)
+//    				{
+//    					this.table[selected_row][selected_column].setMatch(true);
+//    					this.table[selected_row][selected_column-1].setMatch(true);
+//    					this.table[selected_row+][selected_column].setMatch(true);
+//    					this.table[selected_row-1][selected_column-1].setMatch(true);
+//    				}
+//
+//    				if (selected_row)
+//    			}
+//    		}
+
+
+	}
 	
     public void handleSpecial(Tile t)
     {

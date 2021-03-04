@@ -59,7 +59,7 @@ public class PlayerStage implements IStage{
         gameTwo.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                gameTwoStage.setVisible(false);
+                gameTwoStage.setVisible(true);
                 gameTwoStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 save("Candy Crush");
             }

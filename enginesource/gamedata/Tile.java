@@ -1,12 +1,13 @@
 package gamedata;
 
+import java.awt.*;
+
 public class Tile {
 
 	private int x;
 	private int y;
 	private String color;
-	private boolean isSpecial = false; 
-	
+	private boolean isSpecial = false;
 	private boolean isMatched;
 
 	public Tile(int newX, int newY, String newColor) {
@@ -56,7 +57,5 @@ public class Tile {
 	public String getColor(){
 		return this.color;
 	}
-
-
 
 }

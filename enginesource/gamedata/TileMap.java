@@ -1,5 +1,6 @@
 package gamedata;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -121,27 +122,22 @@ public class TileMap {
 		}
 	}
 	
-	public void updateBoard()
-	{
-		for (int x = 0; x< row; x++)
-		{
-			for (int y = 0; y < column; y++)
-			{
-				if (this.table[x][y].getMatch())
-				{
+	public void updateBoard() {
+		for (int x = 0; x < row; x++) {
+			for (int y = 0; y < column; y++) {
+				if (this.table[x][y].getMatch()) {
 					int current_row = x;
 
-					for (int z = current_row; z > 0; z--)
-					{
+					for (int z = current_row; z > 0; z--) {
 
-						this.table[z][y].setColor(this.table[z-1][y].getColor());
-						this.table[z][y].setMatch(this.table[z-1][y].getMatch());
-						
+						this.table[z][y].setColor(this.table[z - 1][y].getColor());
+						this.table[z][y].setMatch(this.table[z - 1][y].getMatch());
 					}
-					
+
 					this.table[0][y].setColor(chooseRandomTile());
 					this.table[0][y].setMatch(false);
 				}
+
 			}
 		}
 	}

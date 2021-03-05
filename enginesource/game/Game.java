@@ -221,7 +221,11 @@ public class Game extends JFrame {
 			for (int j = 0; j < map.getColumn(); j++) {
 				JButton btn = new JButton();
 				btn.setBackground(colorMap.get(map.getTile(i, j).getColor()));
+				btn.setOpaque(true);
+				btn.setBorderPainted(false);
 				tileClickedEvent(btn);
+				map.checkMatches(); //after tiles are updated double check for matches
+				map.updateBoard();
 				btn.setName(String.format("%d,%d", i, j));
 				TileFrame.add(btn);
 			}
@@ -232,14 +236,17 @@ public class Game extends JFrame {
 
 
 	private Component makeGrid(){
-
 		TileFrame = new JPanel();
 		TileFrame.setLayout(new GridLayout(map.getRow(), map.getColumn()));
 		for (int i = 0; i < map.getRow(); i++) {
 			for (int j = 0; j < map.getColumn(); j++) {
 				JButton btn = new JButton();
 				btn.setBackground(colorMap.get(map.getTile(i, j).getColor()));
+				map.checkMatches(); //so you dont start off with any matches
+				map.updateBoard();
 				tileClickedEvent(btn);
+				btn.setOpaque(true);
+				btn.setBorderPainted(false);
 				btn.setName(String.format("%d,%d", i, j));
 				TileFrame.add(btn);
 			}
@@ -259,8 +266,8 @@ public class Game extends JFrame {
 				} catch (ClassNotFoundException classNotFoundException) {
 					classNotFoundException.printStackTrace();
 				}
-				tileClicked = !(tileClicked);
-				if (!tileClicked) {
+				tileClicked = !(tileClicked); //makes true
+				if (!tileClicked) { //if false
 					map.switchTiles(previousTile, btn.getName());
 					map.checkMatches();
 					map.updateBoard();

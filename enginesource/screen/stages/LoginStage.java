@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -67,9 +68,13 @@ public class LoginStage implements IStage{
         grid.setHgap(10);
         grid.setVgap(10);
 
-        grid.add(loginBox, 0, 0);
-        grid.add(loginBtn, 0, 1);
-        grid.add(registerBox, 0, 2);
+        Label title = new Label("TMGE");
+        title.setFont(new Font("Arial", 30));
+
+        grid.add(title, 0, 0);
+        grid.add(loginBox, 0, 1);
+        grid.add(loginBtn, 0, 2);
+        grid.add(registerBox, 0, 3);
         stage.setScene(new Scene(grid, 700, 350));
         return stage;
     }

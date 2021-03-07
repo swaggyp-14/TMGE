@@ -1,5 +1,6 @@
 package engine;
 
+import gamedata.Resource;
 import gamedata.TileMap;
 import game.Game;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 public class EngineAPI {
     private TileMap tileMap;
     private Game game;
+    private Resource res;
 
     public EngineAPI() {
     }
@@ -47,6 +49,10 @@ public class EngineAPI {
     }
     public void addColor(String key, Color value) {
         this.game.addColorEntry(key, value);
+    }
+    public void addAsset(String key, Color value, String dir) {
+        this.game.addColorEntry(key, value);
+        this.game.addResourceEntry(value, dir);
     }
     // TODO - Add more interfaces that the game needs to implement
 }

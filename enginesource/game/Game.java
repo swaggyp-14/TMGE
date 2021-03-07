@@ -1,13 +1,10 @@
 package game;
 
+import gamedata.Resource;
 import gamedata.TileMap;
 import facade.GameFacade;
 
-import javax.swing.JFrame; //imports JFrame library
-import javax.swing.JLabel;
-import javax.swing.JButton; //imports JButton library
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,10 +33,12 @@ public class Game extends JFrame {
 	private String previousTile;
 	private Map<String, Color> colorMap;
 	private JPanel parentPanel;
+	private Resource resource;
 
 	public Game(String gameName, TileMap map){
 		this.gameName = gameName;
 		gf = new GameFacade();
+		this.map = map;
 		// TODO - Make this customizable thru API
 		this.colorMap = new HashMap<>();
 		colorMap.put("R", Color.RED);
@@ -48,7 +47,7 @@ public class Game extends JFrame {
 		colorMap.put("Y", Color.yellow);
 		colorMap.put("G", Color.GREEN);
 		colorMap.put("O", Color.orange);
-		this.map = map;
+		this.resource = new Resource(colorMap); //Map between Color --> resource path
 		this.map.fillBoard();
 
 		setLayout(new BorderLayout()); //setting layout
@@ -57,6 +56,9 @@ public class Game extends JFrame {
 	}
 	public void addColorEntry(String key, Color value) {
 		this.colorMap.put(key, value);
+	}
+	public void addResourceEntry(Color key, String dir) {
+		this.resource.addResource(key, dir);
 	}
 	public JFrame getFrame() {
 		return this;
@@ -202,15 +204,13 @@ public class Game extends JFrame {
 
 	}
 
-
-	private JPanel updateTiles() throws IOException, ClassNotFoundException {
-		TileFrame.removeAll();
-
+	private void drawGrid() {
 		TileFrame.setLayout(new GridLayout(map.getRow(), map.getColumn()));
 		for (int i = 0; i < map.getRow(); i++) {
 			for (int j = 0; j < map.getColumn(); j++) {
 				JButton btn = new JButton();
-				btn.setBackground(colorMap.get(map.getTile(i, j).getColor()));
+				//btn.setBackground(colorMap.get(map.getTile(i, j).getColor()));
+				btn.setIcon(new ImageIcon(resource.getDir(colorMap.get(map.getTile(i, j).getColor()))));
 				btn.setOpaque(true);
 				btn.setBorderPainted(false);
 				tileClickedEvent(btn);
@@ -220,68 +220,55 @@ public class Game extends JFrame {
 				TileFrame.add(btn);
 			}
 		}
-		TileFrame.setBackground(Color.RED);
+		TileFrame.setBackground(Color.BLACK);
+	}
+	private JPanel updateTiles() throws IOException, ClassNotFoundException {
+		TileFrame.removeAll();
+		drawGrid();
 		return TileFrame;
 	}
 
 
 	private Component makeGrid(){
 		TileFrame = new JPanel();
-		TileFrame.setLayout(new GridLayout(map.getRow(), map.getColumn()));
-		for (int i = 0; i < map.getRow(); i++) {
-			for (int j = 0; j < map.getColumn(); j++) {
-				JButton btn = new JButton();
-				btn.setBackground(colorMap.get(map.getTile(i, j).getColor()));
-				map.checkMatches(); //so you dont start off with any matches
-				map.updateBoard();
-				tileClickedEvent(btn);
-				btn.setOpaque(true);
-				btn.setBorderPainted(false);
-				btn.setName(String.format("%d,%d", i, j));
-				TileFrame.add(btn);
-			}
-		}
-		TileFrame.setBackground(Color.RED);
+		drawGrid();
 		return TileFrame;
 	}
 
 	private void tileClickedEvent(JButton btn) {
-		btn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		btn.addActionListener(e -> {
+			try {
+				updateTextFields();
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
+			} catch (ClassNotFoundException classNotFoundException) {
+				classNotFoundException.printStackTrace();
+			}
+			tileClicked = !(tileClicked); //makes true
+			if (!tileClicked) { //if false
+				map.switchTiles(previousTile, btn.getName());
+				map.checkMatches();
+				map.updateBoard();
 				try {
-					updateTextFields();
+					updateTiles();
 				} catch (IOException ioException) {
 					ioException.printStackTrace();
 				} catch (ClassNotFoundException classNotFoundException) {
 					classNotFoundException.printStackTrace();
 				}
-				tileClicked = !(tileClicked); //makes true
-				if (!tileClicked) { //if false
-					map.switchTiles(previousTile, btn.getName());
-					map.checkMatches();
-					map.updateBoard();
-					try {
-						updateTiles();
-					} catch (IOException ioException) {
-						ioException.printStackTrace();
-					} catch (ClassNotFoundException classNotFoundException) {
-						classNotFoundException.printStackTrace();
-					}
-					TileFrame.revalidate();
-					TileFrame.repaint();
-					previousTile = null;
-					try {
-						gf.updateScore(scorePerClear);
-					} catch (IOException ioException) {
-						ioException.printStackTrace();
-					} catch (ClassNotFoundException classNotFoundException) {
-						classNotFoundException.printStackTrace();
-					}
-					scoreField.setText(gf.getScore());
-				} else {
-					previousTile = btn.getName();
+				TileFrame.revalidate();
+				TileFrame.repaint();
+				previousTile = null;
+				try {
+					gf.updateScore(scorePerClear);
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				} catch (ClassNotFoundException classNotFoundException) {
+					classNotFoundException.printStackTrace();
 				}
+				scoreField.setText(gf.getScore());
+			} else {
+				previousTile = btn.getName();
 			}
 		});
 	}

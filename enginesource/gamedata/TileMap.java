@@ -6,150 +6,138 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class TileMap {
-	
-	public Tile[][] table;
-	
-	private int row, column;
-	
-	private String switched_color;
-	
-	public TileMap(int r, int c)
-	{
-		this.row = r;
-		
-		this.column = c;
-		
-		this.table = new Tile[r][c];
-		
-	}
-	public Tile[][] getTable() {
-		return table;
-	}
 
-	public Tile getTile(int i, int j) {
-		return this.table[i][j];
-	}
+    public Tile[][] table;
 
-	public int getRow() {
-		return row;
-	}
+    private int row, column;
 
-	public void setRow(int row) {
-		this.row = row;
-	}
+    private String switched_color;
 
-	public int getColumn() {
-		return column;
-	}
+    public TileMap(int r, int c) {
+        this.row = r;
 
-	public void placeTile(int x, int y, Tile t) {
-		this.table[x][y] = t;
-	}
-	public void setColumn(int column) {
-		this.column = column;
-	}
-	public String chooseRandomTile()
-	{
-		ArrayList<String> givenTiles = new ArrayList<String> (Arrays.asList("B", "R", "G", "Y", "O", "P"));
-		
-		Random rand = new Random();
-		
-		return givenTiles.get(rand.nextInt(givenTiles.size()));
-	}
-	
-	public void fillBoard()
-	{
-		for (int x = 0; x < row; x++)
-		{
-			for (int y = 0; y < column; y++)
-			{
-				String tile_selected = chooseRandomTile();
-				
-				this.table[x][y] = new Tile(x, y, tile_selected);
-			}
-		}
-	}
-	
-	public String toString()
-	{
-		String currentBoard = "";
-		
-		for (int x = 0; x < row; x++)
-		{
-			for (int y = 0; y < column; y++)
-			{
-				currentBoard = currentBoard + this.table[x][y].getColor();
-			}
-			
-			currentBoard = currentBoard + "\n";
-		}
-		
-		return currentBoard;
-	}
-	
-	public void checkMatches()
-	{
-		for (int x = 0; x < row-2; x++)
-		{
-			for (int y = 0; y < column; y++)
-			{
-				if (this.table[x][y].getColor().equals(this.table[x+1][y].getColor()) && (this.table[x][y].getColor().equals(this.table[x+2][y].getColor())))
-				{
-					this.table[x][y].setMatch(true);
-					this.table[x+1][y].setMatch(true);
-					this.table[x+2][y].setMatch(true);
+        this.column = c;
+
+        this.table = new Tile[r][c];
+
+    }
+
+    public Tile[][] getTable() {
+        return table;
+    }
+
+    public Tile getTile(int i, int j) {
+        return this.table[i][j];
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void placeTile(int x, int y, Tile t) {
+        this.table[x][y] = t;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public String chooseRandomTile() {
+        ArrayList<String> givenTiles = new ArrayList<String>(Arrays.asList("B", "R", "G", "Y", "O", "P"));
+
+        Random rand = new Random();
+
+        return givenTiles.get(rand.nextInt(givenTiles.size()));
+    }
+
+    public void fillBoard() {
+        for (int x = 0; x < row; x++) {
+            for (int y = 0; y < column; y++) {
+                String tile_selected = chooseRandomTile();
+
+                this.table[x][y] = new Tile(x, y, tile_selected);
+            }
+        }
+    }
+
+    public String toString() {
+        String currentBoard = "";
+
+        for (int x = 0; x < row; x++) {
+            for (int y = 0; y < column; y++) {
+                currentBoard = currentBoard + this.table[x][y].getColor();
+            }
+
+            currentBoard = currentBoard + "\n";
+        }
+
+        return currentBoard;
+    }
+
+    public void checkMatches() {
+        for (int x = 0; x < row - 2; x++) {
+            for (int y = 0; y < column; y++) {
+                if (this.table[x][y].getColor().equals(this.table[x + 1][y].getColor()) && (this.table[x][y].getColor().equals(this.table[x + 2][y].getColor()))) {
+                    this.table[x][y].setMatch(true);
+                    this.table[x + 1][y].setMatch(true);
+                    this.table[x + 2][y].setMatch(true);
 //					this.table[x][y].setColor("Match");
 //					this.table[x+1][y].setColor("Match");
 //					this.table[x+2][y].setColor("Match");
-				}
-			}
-		}
-		
-		for (int x = 0; x < row; x++)
-		{
-			for (int y = 0; y < column-2; y++)
-			{
-				if (this.table[x][y].getColor().equals(this.table[x][y+1].getColor()) && (this.table[x][y].getColor().equals(this.table[x][y+2].getColor())))
-				{
-					this.table[x][y].setMatch(true);
-					this.table[x][y+1].setMatch(true);
-					this.table[x][y+2].setMatch(true);
+                }
+            }
+        }
+
+        for (int x = 0; x < row; x++) {
+            for (int y = 0; y < column - 2; y++) {
+                if (this.table[x][y].getColor().equals(this.table[x][y + 1].getColor()) && (this.table[x][y].getColor().equals(this.table[x][y + 2].getColor()))) {
+                    this.table[x][y].setMatch(true);
+                    this.table[x][y + 1].setMatch(true);
+                    this.table[x][y + 2].setMatch(true);
 //					this.table[x][y].setColor("Match");
 //					this.table[x][y+1].setColor("Match");
 //					this.table[x][y+2].setColor("Match");
-				}
-			}
-		}
-	}
-	
-	public void updateBoard() {
-		for (int x = 0; x < row; x++) {
-			for (int y = 0; y < column; y++) {
-				if (this.table[x][y].getMatch()) {
-					int current_row = x;
+                }
+            }
+        }
+    }
 
-					for (int z = current_row; z > 0; z--) {
+    public void updateBoard() {
+        for (int x = 0; x < row; x++) {
+            for (int y = 0; y < column; y++) {
+                if (this.table[x][y].getMatch()) {
+                    int current_row = x;
 
-						this.table[z][y].setColor(this.table[z - 1][y].getColor());
-						this.table[z][y].setMatch(this.table[z - 1][y].getMatch());
-					}
+                    for (int z = current_row; z > 0; z--) {
 
-					this.table[0][y].setColor(chooseRandomTile());
-					this.table[0][y].setMatch(false);
-				}
+                        this.table[z][y].setColor(this.table[z - 1][y].getColor());
+                        this.table[z][y].setMatch(this.table[z - 1][y].getMatch());
+                    }
 
-			}
-		}
-	}
+                    this.table[0][y].setColor(chooseRandomTile());
+                    this.table[0][y].setMatch(false);
+                }
+
+            }
+        }
+    }
 
 
-	public boolean inbounds(int prevX, int prevY, int afterX, int afterY){
-		if(prevX + 1 == afterX || prevX - 1 == afterX || prevY + 1 == afterY || prevY - 1 == afterY ){
-			return true;
-		}
-		return false;
-	}
-	
+    public boolean inbounds(int prevX, int prevY, int afterX, int afterY) {
+        if (prevX + 1 == afterX || prevX - 1 == afterX || prevY + 1 == afterY || prevY - 1 == afterY) {
+            return true;
+        }
+        return false;
+    }
+
     public void switchTiles(String prev, String next) {
         String[] prevArr = prev.split(",");
         String[] nextArr = next.split(",");
@@ -160,134 +148,104 @@ public class TileMap {
         nextY = Integer.parseInt(nextArr[1]);
         Tile temp = this.table[prevX][prevY];
 
-		if ( Math.abs(prevX-nextX) > 1 || Math.abs(prevY-nextY) > 1 ) {
-			return;
-		}
+        if (Math.abs(prevX - nextX) > 1 || Math.abs(prevY - nextY) > 1) {
+            return;
+        }
 
-		if (temp.getColor().equals("COLORMATCH"))
-		{
-			if(inbounds(prevX,prevY,nextX,nextY)){
-				this.switched_color = this.table[nextX][nextY].getColor();
-				temp.setMatch(true);
-				special(temp.getColor(),nextX,nextY);
-			}
-		}
-		else if (this.table[nextX][nextY].getColor().equals("COLORMATCH"))
-		{
-			if(inbounds(prevX,prevY,nextX,nextY)){
-				this.switched_color = temp.getColor();
-				this.table[nextX][nextY].setMatch(true);
-				special(this.table[nextX][nextY].getColor(),prevX,prevY);
-			}
-		}
+        if (temp.getColor().equals("COLORMATCH")) {
+            if (inbounds(prevX, prevY, nextX, nextY)) {
+                this.switched_color = this.table[nextX][nextY].getColor();
+                temp.setMatch(true);
+                special(temp.getColor(), nextX, nextY);
+            }
+        } else if (this.table[nextX][nextY].getColor().equals("COLORMATCH")) {
+            if (inbounds(prevX, prevY, nextX, nextY)) {
+                this.switched_color = temp.getColor();
+                this.table[nextX][nextY].setMatch(true);
+                special(this.table[nextX][nextY].getColor(), prevX, prevY);
+            }
+        }
 
-		if (temp.getColor().equals("XLINE"))
-		{
-			if(inbounds(prevX,prevY,nextX,nextY)){
-				temp.setMatch(true);
-				special(temp.getColor(),nextX,nextY);
-			}
-		}
-		else if (this.table[nextX][nextY].getColor().equals("XLINE"))
-		{
-			if(inbounds(prevX,prevY,nextX,nextY)){
-				this.switched_color = temp.getColor();
-				this.table[nextX][nextY].setMatch(true);
-				special(this.table[nextX][nextY].getColor(),prevX,prevY);
-			}
-		}
-		if (temp.getColor().equals("YLINE"))
-		{
-			if(inbounds(prevX,prevY,nextX,nextY)){
-				temp.setMatch(true);
-				special(temp.getColor(),nextX,nextY);
-			}
-		}
-		else if (this.table[nextX][nextY].getColor().equals("YLINE"))
-		{
-			if(inbounds(prevX,prevY,nextX,nextY)){
-				this.switched_color = temp.getColor();
-				this.table[nextX][nextY].setMatch(true);
-				special(this.table[nextX][nextY].getColor(),prevX,prevY);
-			}
-		}
+        if (temp.getColor().equals("XLINE")) {
+            if (inbounds(prevX, prevY, nextX, nextY)) {
+                temp.setMatch(true);
+                special(temp.getColor(), nextX, nextY);
+            }
+        } else if (this.table[nextX][nextY].getColor().equals("XLINE")) {
+            if (inbounds(prevX, prevY, nextX, nextY)) {
+                this.switched_color = temp.getColor();
+                this.table[nextX][nextY].setMatch(true);
+                special(this.table[nextX][nextY].getColor(), prevX, prevY);
+            }
+        }
+        if (temp.getColor().equals("YLINE")) {
+            if (inbounds(prevX, prevY, nextX, nextY)) {
+                temp.setMatch(true);
+                special(temp.getColor(), nextX, nextY);
+            }
+        } else if (this.table[nextX][nextY].getColor().equals("YLINE")) {
+            if (inbounds(prevX, prevY, nextX, nextY)) {
+                this.switched_color = temp.getColor();
+                this.table[nextX][nextY].setMatch(true);
+                special(this.table[nextX][nextY].getColor(), prevX, prevY);
+            }
+        }
 
-		if (temp.getColor().equals("CROSS"))
-		{
-			if(inbounds(prevX,prevY,nextX,nextY)){
-				temp.setMatch(true);
-				special(temp.getColor(),nextX,nextY);
-			}
-		}
-		else if (this.table[nextX][nextY].getColor().equals("CROSS"))
-		{
-			if(inbounds(prevX,prevY,nextX,nextY)){
-				this.switched_color = temp.getColor();
-				this.table[nextX][nextY].setMatch(true);
-				special(this.table[nextX][nextY].getColor(),prevX,prevY);
-			}
-		}
+        if (temp.getColor().equals("CROSS")) {
+            if (inbounds(prevX, prevY, nextX, nextY)) {
+                temp.setMatch(true);
+                special(temp.getColor(), nextX, nextY);
+            }
+        } else if (this.table[nextX][nextY].getColor().equals("CROSS")) {
+            if (inbounds(prevX, prevY, nextX, nextY)) {
+                this.switched_color = temp.getColor();
+                this.table[nextX][nextY].setMatch(true);
+                special(this.table[nextX][nextY].getColor(), prevX, prevY);
+            }
+        }
 
-		if(inbounds(prevX,prevY,nextX,nextY)){
-			this.table[prevX][prevY] = this.table[nextX][nextY];
-			this.table[nextX][nextY] = temp;
-			
-		}
+        if (inbounds(prevX, prevY, nextX, nextY)) {
+            this.table[prevX][prevY] = this.table[nextX][nextY];
+            this.table[nextX][nextY] = temp;
 
-	}
+        }
 
-	public void special(String specialType, int newX, int newY)
-	{
-		if (specialType == "COLORMATCH")
-		{
-			for (int x =0; x < row; x++)
-			{
-				for (int y =0; y < column; y++)
-				{
-					if (this.table[x][y].getColor().equals(this.switched_color))
-					{
-						this.table[x][y].setMatch(true);
-					}
-				}
-			}
-		}
+    }
 
-		else if (specialType == "CROSS")
-		{
-			int selected_row = newX;
+    public void special(String specialType, int newX, int newY) {
+        if (specialType == "COLORMATCH") {
+            for (int x = 0; x < row; x++) {
+                for (int y = 0; y < column; y++) {
+                    if (this.table[x][y].getColor().equals(this.switched_color)) {
+                        this.table[x][y].setMatch(true);
+                    }
+                }
+            }
+        } else if (specialType == "CROSS") {
+            int selected_row = newX;
 
-			int selected_column = newY;
+            int selected_column = newY;
 
-			for (int y = 0; y < column; y++)
-			{
-				this.table[selected_row][y].setMatch(true);
-			}
+            for (int y = 0; y < column; y++) {
+                this.table[selected_row][y].setMatch(true);
+            }
 
-			for (int x = 0; x < row; x++)
-			{
-				this.table[x][selected_column].setMatch(true);
-			}
-		}
+            for (int x = 0; x < row; x++) {
+                this.table[x][selected_column].setMatch(true);
+            }
+        } else if (specialType == "XLINE") {
+            int selected_row = newX;
 
-		else if (specialType == "XLINE")
-		{
-			int selected_row = newX;
+            for (int y = 0; y < column; y++) {
+                this.table[selected_row][y].setMatch(true);
+            }
+        } else if (specialType == "YLINE") {
+            int selected_column = newY;
 
-			for (int y = 0; y < column; y++)
-			{
-				this.table[selected_row][y].setMatch(true);
-			}
-		}
-
-		else if (specialType == "YLINE")
-		{
-			int selected_column = newY;
-
-			for (int x = 0; x < row; x++)
-			{
-				this.table[x][selected_column].setMatch(true);
-			}
-		}
+            for (int x = 0; x < row; x++) {
+                this.table[x][selected_column].setMatch(true);
+            }
+        }
 
 //    		else if (t.getColor().equals("BOX"))
 //    		{
@@ -329,43 +287,32 @@ public class TileMap {
 //    		}
 
 
-	}
-	
-    public void handleSpecial(Tile t)
-    {
-    	if (t.getSpecial())
-    	{
-    		if (t.getColor().equals("COLORMATCH"))
-    		{
-    			for (int x =0; x < row; x++)
-    			{
-    				for (int y =0; y < column; y++)
-    				{
-    					if (this.table[x][y].getColor().equals(this.switched_color))
-    					{
-    						this.table[x][y].setMatch(true);
-    					}
-    				}
-    			}
-    		}
-    		
-    		else if (t.getColor().equals("CROSS"))
-    		{
-    			int selected_row = t.getX();
-    			
-    			int selected_column = t.getY();
-    			
-    			for (int y = 0; y < column; y++)
-    			{
-    				this.table[selected_row][y].setMatch(true);
-    			}
-    			
-    			for (int x = 0; x < row; x++)
-    			{
-    				this.table[x][selected_column].setMatch(true);
-    			}
-    		}
-    		
+    }
+
+    public void handleSpecial(Tile t) {
+        if (t.getSpecial()) {
+            if (t.getColor().equals("COLORMATCH")) {
+                for (int x = 0; x < row; x++) {
+                    for (int y = 0; y < column; y++) {
+                        if (this.table[x][y].getColor().equals(this.switched_color)) {
+                            this.table[x][y].setMatch(true);
+                        }
+                    }
+                }
+            } else if (t.getColor().equals("CROSS")) {
+                int selected_row = t.getX();
+
+                int selected_column = t.getY();
+
+                for (int y = 0; y < column; y++) {
+                    this.table[selected_row][y].setMatch(true);
+                }
+
+                for (int x = 0; x < row; x++) {
+                    this.table[x][selected_column].setMatch(true);
+                }
+            }
+
 //    		else if (t.getColor().equals("BOX"))
 //    		{
 //    			int selected_row = t.getX();
@@ -404,9 +351,9 @@ public class TileMap {
 //    				if (selected_row)
 //    			}
 //    		}
-    		
-    		
-    	}
+
+
+        }
     }
 //	public static void main(String[] args)
 //	{
@@ -427,5 +374,5 @@ public class TileMap {
 //		System.out.println(t.toString());
 //
 //	}
-	
+
 }

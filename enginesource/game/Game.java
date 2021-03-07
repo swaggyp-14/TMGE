@@ -41,7 +41,7 @@ public class Game extends JFrame {
 		this.gameName = gameName;
 		gf = new GameFacade();
 		// TODO - Make this customizable thru API
-		this.colorMap = new HashMap<String, Color>();
+		this.colorMap = new HashMap<>();
 		colorMap.put("R", Color.RED);
 		colorMap.put("B", Color.BLUE);
 		colorMap.put("P", Color.pink);
@@ -119,15 +119,12 @@ public class Game extends JFrame {
 
 	private JButton makeQuitButton(GameFacade gf, JFrame f, String gameName) {
 		JButton btn = new JButton("Quit Program");
-		btn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					gf.handleExit(gameName);
-					f.dispose();
-				} catch (IOException ioException) {
-					ioException.printStackTrace();
-				}
+		btn.addActionListener(e -> {
+			try {
+				gf.handleExit(gameName);
+				f.dispose();
+			} catch (IOException ioException) {
+				ioException.printStackTrace();
 			}
 		});
 
@@ -141,31 +138,24 @@ public class Game extends JFrame {
 		} else {
 			btn = new JButton("");
 		}
-		btn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				switch(e.getActionCommand()){
-					case "Next Player":
-						try {
-							gf.handleSwitch(gameName);
-						} catch (IOException ioException) {
-							ioException.printStackTrace();
-						}
-						try {
-							playerField.setText(gf.getUserID());
-						} catch (IOException ioException) {
-							ioException.printStackTrace();
-						} catch (ClassNotFoundException classNotFoundException) {
-							classNotFoundException.printStackTrace();
-						}
-						scoreField.setText(gf.getScore());
-						if (gf.hasNextPlayer()) {
-							btn.setText("Next Player");
-						} else {
-							btn.setText("");
-						}
+		btn.addActionListener(e -> {
+			switch(e.getActionCommand()){
+				case "Next Player":
+					try {
+						gf.handleSwitch(gameName);
+						playerField.setText(gf.getUserID());
+						this.map.fillBoard();
+						updateTiles();
+					} catch (IOException | ClassNotFoundException ioException) {
+						ioException.printStackTrace();
+					}
+					scoreField.setText(gf.getScore());
+					if (gf.hasNextPlayer()) {
+						btn.setText("Next Player");
+					} else {
+						btn.setText("");
+					}
 
-				}
 			}
 		});
 

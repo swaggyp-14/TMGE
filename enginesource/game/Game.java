@@ -260,6 +260,11 @@ public class Game extends JFrame {
 				TileFrame.repaint();
 				previousTile = null;
 				try {
+					if(gf.hasNextPlayer()) {
+						newGame.setText("Next Player");
+					} else {
+						newGame.setText("");
+					}
 					gf.updateScore(scorePerClear);
 				} catch (IOException ioException) {
 					ioException.printStackTrace();

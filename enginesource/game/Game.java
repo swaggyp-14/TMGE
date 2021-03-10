@@ -148,6 +148,8 @@ public class Game extends JFrame {
 						playerField.setText(gf.getUserID());
 						this.map.fillBoard();
 						updateTiles();
+						TileFrame.revalidate();
+						TileFrame.repaint();
 					} catch (IOException | ClassNotFoundException ioException) {
 						ioException.printStackTrace();
 					}
@@ -209,7 +211,6 @@ public class Game extends JFrame {
 		for (int i = 0; i < map.getRow(); i++) {
 			for (int j = 0; j < map.getColumn(); j++) {
 				JButton btn = new JButton();
-				//btn.setBackground(colorMap.get(map.getTile(i, j).getColor()));
 				btn.setIcon(new ImageIcon(resource.getDir(colorMap.get(map.getTile(i, j).getColor()))));
 				btn.setOpaque(true);
 				btn.setBorderPainted(false);

@@ -11,7 +11,6 @@ import java.io.IOException;
 public class EngineAPI {
     private TileMap tileMap;
     private Game game;
-    private Resource res;
 
     public EngineAPI() {
     }

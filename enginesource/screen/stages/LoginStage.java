@@ -9,40 +9,50 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
 import javax.swing.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginStage implements IStage{
     private LoginFacade loginFacade;
+    private List<TextField> loginInputs;
+    private List<Label> loginLabels;
+    private int numOfUsers;
     private JFrame s1, s2;
-    public LoginStage(LoginFacade loginFacade, JFrame s1, JFrame s2){
+    public LoginStage(LoginFacade loginFacade, JFrame s1, JFrame s2, int numOfUsers){
         this.loginFacade = loginFacade;
         this.s1 = s1;
         this.s2 = s2;
+        this.loginInputs = new ArrayList<>();
+        this.loginLabels = new ArrayList<>();
+        this.numOfUsers = numOfUsers;
     }
 
     public Stage getStage() {
         // Start Login Element
         Stage stage = new Stage();
         stage.setTitle("Login Screen");
+        // Generate login UI
         HBox loginBox = new HBox();
-        Label loginLabel = new Label("Login ID Player 1:");
-        TextField loginField = new TextField();
-        Label loginLabelPlayer2 = new Label("(Not Required) Login ID Player 2:");
-        TextField loginFieldPlayer2 = new TextField();
+        for(int i = 0; i < this.numOfUsers; i++) {
+            this.loginLabels.add(new Label("Login ID Player " + (i + 1) + ": "));
+            this.loginInputs.add(new TextField());
+        }
         Button loginBtn = new Button("Login");
         loginBtn.setOnAction(event -> {
             try {
-                loginFacade.handleLogin(loginField.getText(), loginFieldPlayer2.getText());
+                loginFacade.handleLogin(this.loginInputs);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             stage.close();
             loginFacade.goPlayerScreen(s1, s2);
         });
-
-        loginBox.getChildren().addAll(loginLabel, loginField, loginLabelPlayer2, loginFieldPlayer2);
+        for(int i = 0; i < this.numOfUsers; i++){
+            loginBox.getChildren().add(this.loginLabels.get(i));
+            loginBox.getChildren().add(this.loginInputs.get(i));
+        }
         loginBox.setSpacing(10);
         // End Login Elements
 

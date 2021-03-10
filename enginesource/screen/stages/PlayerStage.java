@@ -52,22 +52,16 @@ public class PlayerStage implements IStage{
         Label playerLose = new Label("Total Losses: " + this.pm.getActivePlayer().getLoses());
         playerLose.setFont(font);
         Button gameOne = new Button("Launch Bejeweled");
-        gameOne.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                gameOneStage.setVisible(true);
-                gameOneStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                save("Bejeweled");
-            }
+        gameOne.setOnAction(event -> {
+            gameOneStage.setVisible(true);
+            gameOneStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            save("Bejeweled");
         });
         Button gameTwo = new Button("Launch Candy Crush");
-        gameTwo.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                gameTwoStage.setVisible(true);
-                gameTwoStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                save("Candy Crush");
-            }
+        gameTwo.setOnAction(event -> {
+            gameTwoStage.setVisible(true);
+            gameTwoStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            save("Candy Crush");
         });
         // Set Pane
         GridPane grid = new GridPane();

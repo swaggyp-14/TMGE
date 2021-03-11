@@ -9,6 +9,7 @@ public class Tile {
 	private String color;
 	private boolean isSpecial = false;
 	private boolean isMatched;
+	private boolean isActive = true;
 
 	public Tile(int newX, int newY, String newColor) {
 		this.x = newX;
@@ -58,4 +59,11 @@ public class Tile {
 		return this.color;
 	}
 
+	public void setIsActiveToFalse() {
+		this.isActive = false;
+	}
+
+	public boolean getIsActive(){
+		return this.isActive;
+	}
 }

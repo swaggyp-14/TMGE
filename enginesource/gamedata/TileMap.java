@@ -68,6 +68,7 @@ public class TileMap {
     }
 
     public String toString() {
+
         String currentBoard = "";
 
         for (int x = 0; x < row; x++) {

@@ -3,6 +3,7 @@ package gamedata;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.*;
 
 public class TileMap {
 
@@ -352,6 +353,31 @@ public class TileMap {
 //    		}
 
 
+        }
+    }
+
+    public void deactivateRandomTiles(int numberToDeactivate){
+        List<Integer> rowList = new ArrayList<Integer>();
+        List<Integer> columnList = new ArrayList<Integer>();
+        for (int x = 0; x < this.row; x++){
+            rowList.add(x);
+        }
+
+        for (int y = 0; y < this.column; y++){
+            columnList.add(y);
+        }
+
+        Random rand = new Random();
+        int deactiveCounter = numberToDeactivate;
+        while (deactiveCounter > 0){
+            int randRow = rand.nextInt(rowList.size());
+            int randCol = rand.nextInt(columnList.size());
+
+            if (this.table[randRow][randCol].getIsActive() == false){
+                continue;
+            }
+            this.table[randRow][randCol].setIsActiveToFalse();
+            deactiveCounter--;
         }
     }
 //	public static void main(String[] args)

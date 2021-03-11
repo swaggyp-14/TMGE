@@ -3,6 +3,7 @@ package gamedata;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.*;
 
 public class TileMap {
 
@@ -68,7 +69,6 @@ public class TileMap {
     }
 
     public String toString() {
-
         String currentBoard = "";
 
         for (int x = 0; x < row; x++) {
@@ -80,69 +80,37 @@ public class TileMap {
         }
 
         return currentBoard;
-
-    }
-
-    public void spawnSpecialTile(String type, int count, int x, int y) {
-        if(count == 5)
-        {
-            this.table[x][y].setColor("COLORMATCH");
-            this.table[x][y].setMatch(false);
-        }
-        if(count == 4 && type == "X")
-        {
-            this.table[x][y].setColor("XLINE");
-            this.table[x][y].setMatch(false);
-        }
-
-        if(count == 4 && type == "Y")
-        {
-            this.table[x][y].setColor("YLINE");
-            this.table[x][y].setMatch(false);
-        }
     }
 
     public void checkMatches() {
-        int count = 0;
         for (int x = 0; x < row - 2; x++) {
             for (int y = 0; y < column; y++) {
-                if (this.table[x][y].getColor().equals(this.table[x + 1][y].getColor()) && (this.table[x][y].getColor().equals(this.table[x + 2][y].getColor()))) {
+                if (this.table[x][y].getColor().equals(this.table[x + 1][y].getColor()) &&
+                        (this.table[x][y].getColor().equals(this.table[x + 2][y].getColor())) &&
+                        this.table[x][y].getIsActive() && this.table[x+1][y].getIsActive() && this.table[x+2][y].getIsActive() )
+                {
                     this.table[x][y].setMatch(true);
-                    count+=1;
                     this.table[x + 1][y].setMatch(true);
-                    count+=1;
                     this.table[x + 2][y].setMatch(true);
-                    count+=1;
 //					this.table[x][y].setColor("Match");
 //					this.table[x+1][y].setColor("Match");
 //					this.table[x+2][y].setColor("Match");
-                }
-                if (count >= 4)
-                {
-                    spawnSpecialTile("X", count, x, y);
-                    count = 0;
-
                 }
             }
         }
 
         for (int x = 0; x < row; x++) {
             for (int y = 0; y < column - 2; y++) {
-                if (this.table[x][y].getColor().equals(this.table[x][y + 1].getColor()) && (this.table[x][y].getColor().equals(this.table[x][y + 2].getColor()))) {
+                if (this.table[x][y].getColor().equals(this.table[x][y + 1].getColor()) &&
+                        (this.table[x][y].getColor().equals(this.table[x][y + 2].getColor())) &&
+                        this.table[x][y].getIsActive() && this.table[x][y+1].getIsActive() && this.table[x][y+2].getIsActive() )
+                {
                     this.table[x][y].setMatch(true);
-                    count+=1;
                     this.table[x][y + 1].setMatch(true);
-                    count+=1;
                     this.table[x][y + 2].setMatch(true);
-                    count+=1;
 //					this.table[x][y].setColor("Match");
 //					this.table[x][y+1].setColor("Match");
 //					this.table[x][y+2].setColor("Match");
-                }
-                if (count >= 4)
-                {
-                    spawnSpecialTile("Y", count, x, y);
-                    count = 0;
                 }
             }
         }
@@ -155,9 +123,15 @@ public class TileMap {
                     int current_row = x;
 
                     for (int z = current_row; z > 0; z--) {
+                        if ( !this.table[z-1][y].getIsActive() || z >= 2 ) {
+                            this.table[z][y].setColor(this.table[z - 2][y].getColor());
+                            this.table[z][y].setMatch(this.table[z - 2][y].getMatch());
+                        }
+                        else {
+                            this.table[z][y].setColor(this.table[z - 1][y].getColor());
+                            this.table[z][y].setMatch(this.table[z - 1][y].getMatch());
+                        }
 
-                        this.table[z][y].setColor(this.table[z - 1][y].getColor());
-                        this.table[z][y].setMatch(this.table[z - 1][y].getMatch());
                     }
 
                     this.table[0][y].setColor(chooseRandomTile());
@@ -285,43 +259,140 @@ public class TileMap {
             }
         }
 
-//    		else if (t.getColor().equals("BOX"))
-//    		{
-//    			int selected_row = t.getX();
-//
-//    			int selected_column = t.getY();
-//
-//    			if (selected_column == 0)
-//    			{
-//    				if (selected_row == 0)
-//    				{
-//    					this.table[0][0].setMatch(true);
-//    					this.table[0][1].setMatch(true);
-//    					this.table[1][0].setMatch(true);
-//    					this.table[1][1].setMatch(true);
-//    				}
-//
-//    				if (selected_row == this.row-1)
-//    				{
-//    					this.table[selected_row][selected_column].setMatch(true);
-//    					this.table[selected_row-1][selected_column].setMatch(true);
-//    					this.table[selected_row-1][selected_column-1].setMatch(true);
-//    					this.table[selected_row][selected_column].setMatch(true);
-//    				}
-//    			}
-//
-//    			if (selected_column == this.column-1)
-//    			{
-//    				if (selected_row == 0)
-//    				{
-//    					this.table[selected_row][selected_column].setMatch(true);
-//    					this.table[selected_row][selected_column-1].setMatch(true);
-//    					this.table[selected_row+][selected_column].setMatch(true);
-//    					this.table[selected_row-1][selected_column-1].setMatch(true);
-//    				}
-//
-//    				if (selected_row)
-//    			}
-//    		}
+
+        else if ( specialType == "BOX" )
+        {
+            int selected_row = newX;
+
+            int selected_column = newY;
+
+            if (selected_column == 0) // edge case, first column
+            {
+                if (selected_row == 0) // first row, first column
+                {
+                    this.table[0][0].setMatch(true);
+                    this.table[0][1].setMatch(true);
+                    this.table[1][0].setMatch(true);
+                    this.table[1][1].setMatch(true);
+                }
+
+                else if (selected_row == this.row-1)  // last row, first column
+                {
+                    this.table[selected_row][selected_column].setMatch(true);
+                    this.table[selected_row-1][selected_column].setMatch(true);
+                    this.table[selected_row-1][selected_column+1].setMatch(true);
+                    this.table[selected_row][selected_column + 1].setMatch(true);
+                }
+
+                else // first column, any other row
+                {
+                    this.table[selected_row][selected_column].setMatch(true);
+                    this.table[selected_row][selected_column+1].setMatch(true);
+
+                    this.table[selected_row-1][selected_column].setMatch(true);
+                    this.table[selected_row-1][selected_column+1].setMatch(true);
+
+                    this.table[selected_row+1][selected_column+1].setMatch(true);
+                    this.table[selected_row+1][selected_column].setMatch(true);
+                }
+            }
+
+            else if (selected_column == this.column-1) // last column
+            {
+                if (selected_row == 0) // last column, first row
+                {
+                    this.table[selected_row][selected_column].setMatch(true);
+                    this.table[selected_row][selected_column-1].setMatch(true);
+                    this.table[selected_row+1][selected_column].setMatch(true);
+                    this.table[selected_row+1][selected_column-1].setMatch(true);
+                }
+
+                else if (selected_row == this.row-1) // last column, last row
+                {
+                    this.table[selected_row][selected_column].setMatch(true);
+                    this.table[selected_row-1][selected_column].setMatch(true);
+                    this.table[selected_row-1][selected_column-1].setMatch(true);
+                    this.table[selected_row][selected_column-1].setMatch(true);
+                }
+
+                else // last column, any other row
+                {
+                    this.table[selected_row][selected_column].setMatch(true);
+                    this.table[selected_row][selected_column-1].setMatch(true);
+
+                    this.table[selected_row-1][selected_column].setMatch(true);
+                    this.table[selected_row-1][selected_column-1].setMatch(true);
+
+                    this.table[selected_row+1][selected_column-1].setMatch(true);
+                    this.table[selected_row+1][selected_column].setMatch(true);
+                }
+            }
+
+            else // any non-border case
+            {
+                this.table[selected_row-1][selected_column-1].setMatch(true);
+                this.table[selected_row-1][selected_column].setMatch(true);
+                this.table[selected_row-1][selected_column+1].setMatch(true);
+
+                this.table[selected_row][selected_column-1].setMatch(true);
+                this.table[selected_row][selected_column].setMatch(true);
+                this.table[selected_row][selected_column+1].setMatch(true);
+
+                this.table[selected_row+1][selected_column-1].setMatch(true);
+                this.table[selected_row+1][selected_column].setMatch(true);
+                this.table[selected_row+1][selected_column+1].setMatch(true);
+            }
+        }
+
+
+
     }
+
+
+    public void deactivateRandomTiles(int numberToDeactivate){
+        List<Integer> rowList = new ArrayList<Integer>();
+        List<Integer> columnList = new ArrayList<Integer>();
+        for (int x = 0; x < this.row; x++){
+            rowList.add(x);
+        }
+
+        for (int y = 0; y < this.column; y++){
+            columnList.add(y);
+        }
+
+        Random rand = new Random();
+        int deactiveCounter = numberToDeactivate;
+        while (deactiveCounter > 0){
+            int randRow = rand.nextInt(rowList.size());
+            if ( randRow < 1 ) { randRow = 1; }
+            int randCol = rand.nextInt(columnList.size());
+
+            if (this.table[randRow][randCol].getIsActive() == false){
+                continue;
+            }
+            this.table[randRow][randCol].setIsActiveToFalse();
+            deactiveCounter--;
+        }
+    }
+
+//	public static void main(String[] args)
+//	{
+//		TileMap t = new TileMap(7,7);
+//
+//		t.fillBoard();
+//		//System.out.println(t.toString());
+//
+//		t.table[4][0].setColor("B");
+//		t.table[1][0].setColor("B");
+//		t.table[2][0].setColor("B");
+//		t.table[3][0].setColor("B");
+//		System.out.println(t.toString());
+//		t.checkMatches();
+//		t.updateBoard();
+//
+//		System.out.println("Updated Board");
+//		System.out.println(t.toString());
+//
+//	}
+
 }

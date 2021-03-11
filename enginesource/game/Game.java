@@ -246,7 +246,7 @@ public class Game extends JFrame {
 	private void tileClickedEvent(JButton btn) {
 		btn.addActionListener(e -> {
 			try {
-				System.out.println(btn.getName());
+				
 				updateTextFields();
 			} catch (IOException ioException) {
 				ioException.printStackTrace();

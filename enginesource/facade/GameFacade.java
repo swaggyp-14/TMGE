@@ -52,12 +52,13 @@ public class GameFacade {
     }
     public void handleSwitch(String gameName) throws IOException {
         load();
+        System.out.println("CURRENT PLAYER :" + this.pm.getActivePlayer());
         this.pm.getActivePlayer().updateScore(gameName, this.pm.getActivePlayer().getCurrScore());
         this.pm.getActivePlayer().setCurrScore(0);
         this.pm.switchPlayers();
         this.pm.getActivePlayer().setCurrScore(0);
         save();
-        System.out.println(this.pm.getActivePlayer());
+        System.out.println("CURRENT PLAYER AFTER:" + this.pm.getActivePlayer());
     }
     private void load() {
         pm = util.loadPlayers();

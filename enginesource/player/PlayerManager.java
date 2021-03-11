@@ -41,12 +41,6 @@ public class PlayerManager implements Serializable {
             this.playerQueue.poll();
         }
     }
-    public boolean isSinglePlayer() {
-        if (this.playerQueue.size() == 1) {
-            return true;
-        }
-        return false;
-    }
     public void setQueue(LinkedList<Player> q) {
         this.playerQueue = q;
     }

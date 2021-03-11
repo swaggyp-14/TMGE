@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import player.Player;
 import player.PlayerManager;
@@ -41,28 +42,26 @@ public class PlayerStage implements IStage{
         }
     }
     public Stage getStage() {
+        Font font = new Font("Arial", 14);
         Stage stage = new Stage();
         stage.setTitle("Player Screen");
         Label playerName = new Label("Player name: " + this.pm.getActivePlayer().getUsername());
+        playerName.setFont(font);
         Label playerWins = new Label("Total Wins: " + this.pm.getActivePlayer().getWins());
+        playerWins.setFont(font);
         Label playerLose = new Label("Total Losses: " + this.pm.getActivePlayer().getLoses());
+        playerLose.setFont(font);
         Button gameOne = new Button("Launch Bejeweled");
-        gameOne.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                gameOneStage.setVisible(true);
-                gameOneStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                save("Bejeweled");
-            }
+        gameOne.setOnAction(event -> {
+            gameOneStage.setVisible(true);
+            gameOneStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            save("Bejeweled");
         });
         Button gameTwo = new Button("Launch Candy Crush");
-        gameTwo.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                gameTwoStage.setVisible(true);
-                gameTwoStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                save("Candy Crush");
-            }
+        gameTwo.setOnAction(event -> {
+            gameTwoStage.setVisible(true);
+            gameTwoStage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            save("Candy Crush");
         });
         // Set Pane
         GridPane grid = new GridPane();

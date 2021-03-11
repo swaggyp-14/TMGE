@@ -22,7 +22,6 @@ public class Bejeweled implements SpecialTileGame {
 
     public void setGameName() {
         this.gameName = "Bejeweled";
-
     }
 
     public void setGameInstance() {
@@ -61,6 +60,17 @@ public class Bejeweled implements SpecialTileGame {
         map = e.getTileMap();
         e.addColor(name, color);
     }
+    public void addCustomAssets() {
+        map = e.getTileMap();
+        e.addAsset("R" , Color.RED, "Bejeweled/resources/red_gem.png");
+        e.addAsset("B" , Color.BLUE, "Bejeweled/resources/blue_gem.png");
+        e.addAsset("P" , Color.PINK, "Bejeweled/resources/pink_gem.png");
+        e.addAsset("Y" , Color.YELLOW, "Bejeweled/resources/yellow_gem.png");
+        e.addAsset("G" , Color.GREEN, "Bejeweled/resources/green_gem.png");
+        e.addAsset("O" , Color.ORANGE, "Bejeweled/resources/orange_gem.png");
+        e.addAsset("COLORMATCH", Color.cyan, "Bejeweled/resources/special_gem1.png");
+        e.addAsset("CROSS", Color.white, "Bejeweled/resources/special_gem2.png");
+    }
     public void initGamePanels() {
         try {
             e.setGamePanels();
@@ -82,7 +92,7 @@ public class Bejeweled implements SpecialTileGame {
         // Add special tiles
         addSpecialTiles("COLORMATCH", Color.cyan);
         addSpecialTiles("CROSS", Color.white);
-
+        addCustomAssets();
         generateSpecialTiles(15);
         setScreenDimensions();
         initGamePanels();

@@ -12,7 +12,7 @@ public class CandyCrush implements SpecialTileGame {
     private TileMap map;
     private String gameName;
     private String[] colors = {"COLORMATCH", "XLINE", "YLINE"};
-    private int rows, cols, specialTileCount;
+    private int rows, cols, specialTileCount, inactiveTileCount;
     private int width, height;
     private Random random;
 
@@ -47,6 +47,10 @@ public class CandyCrush implements SpecialTileGame {
     public void setupTileGen() {
         specialTileCount = this.colors.length;
         random = new Random();
+    }
+    public void deactivateTiles() {
+        inactiveTileCount = 10;
+        map.deactivateRandomTiles(inactiveTileCount);
     }
     public void generateSpecialTiles(int count) { // randomly generates special tiles at random locations
         for(int i = 0; i < count; i++) {
@@ -96,7 +100,10 @@ public class CandyCrush implements SpecialTileGame {
 
 
         addSpecialTiles("COLORMATCH", Color.cyan);
-        addSpecialTiles("CROSS", Color.white);
+        addSpecialTiles("XLINE", Color.white);
+        addSpecialTiles("YLINE", Color.gray);
+
+        deactivateTiles();
 
 //        addSpecialTiles("YLINE", Color.black);
 //        addSpecialTiles("XLINE",Color.gray);

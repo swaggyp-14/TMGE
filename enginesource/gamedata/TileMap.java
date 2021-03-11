@@ -85,7 +85,10 @@ public class TileMap {
     public void checkMatches() {
         for (int x = 0; x < row - 2; x++) {
             for (int y = 0; y < column; y++) {
-                if (this.table[x][y].getColor().equals(this.table[x + 1][y].getColor()) && (this.table[x][y].getColor().equals(this.table[x + 2][y].getColor()))) {
+                if (this.table[x][y].getColor().equals(this.table[x + 1][y].getColor()) &&
+                        (this.table[x][y].getColor().equals(this.table[x + 2][y].getColor())) &&
+                        this.table[x][y].getIsActive() && this.table[x+1][y].getIsActive() && this.table[x+2][y].getIsActive() )
+                {
                     this.table[x][y].setMatch(true);
                     this.table[x + 1][y].setMatch(true);
                     this.table[x + 2][y].setMatch(true);
@@ -98,7 +101,10 @@ public class TileMap {
 
         for (int x = 0; x < row; x++) {
             for (int y = 0; y < column - 2; y++) {
-                if (this.table[x][y].getColor().equals(this.table[x][y + 1].getColor()) && (this.table[x][y].getColor().equals(this.table[x][y + 2].getColor()))) {
+                if (this.table[x][y].getColor().equals(this.table[x][y + 1].getColor()) &&
+                        (this.table[x][y].getColor().equals(this.table[x][y + 2].getColor())) &&
+                        this.table[x][y].getIsActive() && this.table[x][y+1].getIsActive() && this.table[x][y+2].getIsActive() )
+                {
                     this.table[x][y].setMatch(true);
                     this.table[x][y + 1].setMatch(true);
                     this.table[x][y + 2].setMatch(true);
@@ -117,9 +123,15 @@ public class TileMap {
                     int current_row = x;
 
                     for (int z = current_row; z > 0; z--) {
+                        if ( !this.table[z-1][y].getIsActive() || z >= 2 ) {
+                            this.table[z][y].setColor(this.table[z - 2][y].getColor());
+                            this.table[z][y].setMatch(this.table[z - 2][y].getMatch());
+                        }
+                        else {
+                            this.table[z][y].setColor(this.table[z - 1][y].getColor());
+                            this.table[z][y].setMatch(this.table[z - 1][y].getMatch());
+                        }
 
-                        this.table[z][y].setColor(this.table[z - 1][y].getColor());
-                        this.table[z][y].setMatch(this.table[z - 1][y].getMatch());
                     }
 
                     this.table[0][y].setColor(chooseRandomTile());
@@ -371,6 +383,7 @@ public class TileMap {
         int deactiveCounter = numberToDeactivate;
         while (deactiveCounter > 0){
             int randRow = rand.nextInt(rowList.size());
+            if ( randRow < 1 ) { randRow = 1; }
             int randCol = rand.nextInt(columnList.size());
 
             if (this.table[randRow][randCol].getIsActive() == false){

@@ -47,6 +47,7 @@ public class Game extends JFrame {
 		colorMap.put("Y", Color.yellow);
 		colorMap.put("G", Color.GREEN);
 		colorMap.put("O", Color.orange);
+		colorMap.put("INACTIVE",Color.BLACK);
 		this.resource = new Resource(colorMap); //Map between Color --> resource path
 		this.map.fillBoard();
 
@@ -212,6 +213,12 @@ public class Game extends JFrame {
 			for (int j = 0; j < map.getColumn(); j++) {
 				JButton btn = new JButton();
 				btn.setIcon(new ImageIcon(resource.getDir(colorMap.get(map.getTile(i, j).getColor()))));
+
+				if ( !map.getTile(i,j).getIsActive() ) {
+					btn.setVisible(false);
+					btn.setEnabled(false);
+				}
+
 				btn.setOpaque(true);
 				btn.setBorderPainted(false);
 				tileClickedEvent(btn);
@@ -239,6 +246,7 @@ public class Game extends JFrame {
 	private void tileClickedEvent(JButton btn) {
 		btn.addActionListener(e -> {
 			try {
+				System.out.println(btn.getName());
 				updateTextFields();
 			} catch (IOException ioException) {
 				ioException.printStackTrace();

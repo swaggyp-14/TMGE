@@ -61,6 +61,18 @@ public class CandyCrush implements SpecialTileGame {
         map = e.getTileMap();
         e.addColor(name, color);
     }
+
+    public void addCustomAssets() {
+        map = e.getTileMap();
+        e.addAsset("R" , Color.RED, "CandyCrush/resources/candyCane.jpeg");
+        e.addAsset("B" , Color.BLUE, "CandyCrush/resources/redSwirlly.jpg");
+        e.addAsset("P" , Color.PINK, "CandyCrush/resources/Green.png");
+        e.addAsset("Y" , Color.YELLOW, "CandyCrush/resources/Orange.png");
+        e.addAsset("G" , Color.GREEN, "CandyCrush/resources/pinkSwirl.jpg");
+        e.addAsset("O" , Color.ORANGE, "CandyCrush/resources/redStripes.jpg");
+        e.addAsset("COLORMATCH", Color.cyan, "CandyCrush/resources/choco.png");
+        e.addAsset("CROSS", Color.white, "CandyCrush/resources/holiday.png");
+    }
     public void initGamePanels() {
         try {
             e.setGamePanels();
@@ -81,10 +93,14 @@ public class CandyCrush implements SpecialTileGame {
         setGameInstance();
         setupTileGen();
         // Add special tiles
-        addSpecialTiles("COLORMATCH", Color.white);
-        addSpecialTiles("YLINE", Color.black);
-        addSpecialTiles("XLINE",Color.gray);
 
+
+        addSpecialTiles("COLORMATCH", Color.cyan);
+        addSpecialTiles("CROSS", Color.white);
+
+//        addSpecialTiles("YLINE", Color.black);
+//        addSpecialTiles("XLINE",Color.gray);
+        addCustomAssets();
         setScreenDimensions();
         initGamePanels();
         setScorePerClear();

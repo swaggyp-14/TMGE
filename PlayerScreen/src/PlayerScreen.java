@@ -14,4 +14,6 @@ public class PlayerScreen extends Application {
         LoginStage loginStage = new LoginStage(loginFacade, new Bejeweled().getFrame(), new CandyCrush().getFrame(), 4);
         loginStage.getStage().show();
     }
+
+
 }

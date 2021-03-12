@@ -1,6 +1,6 @@
 # Required
 
-JavaFX
+JavaFX or Java 10 
 
 # Instructions for running
 

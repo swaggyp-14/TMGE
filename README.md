@@ -1,5 +1,12 @@
 # TMGE
 
+# Instructions for running
+
+1. Register usernames
+2. Populate the # of fields you want for the active players
+3. Click Login
+4. You can now launch Bejeweled or Candy Crush
+
 # Issues
 
 We were unable to get the images to load even using ImageIO. We reverted it to display color *only for the jar build*

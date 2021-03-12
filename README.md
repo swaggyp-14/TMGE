@@ -6,4 +6,8 @@ We were unable to get the images to load even using ImageIO. We reverted it to d
 
 If you clone this repository and run it locally, it should display the images. 
 
-This change is viewable under the 'jar-only' branch
+The change was a follows
+
+**on non-jar build:** btn.setIcon(new ImageIcon(resource.getDir(colorMap.get(map.getTile(i, j).getColor()))));
+
+**on jar build:** btn.setBackground(colorMap.get(map.getTile(i, j).getColor()));

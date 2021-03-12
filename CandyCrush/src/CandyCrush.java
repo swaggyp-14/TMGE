@@ -68,12 +68,12 @@ public class CandyCrush implements SpecialTileGame {
 
     public void addCustomAssets() {
         map = e.getTileMap();
-        e.addAsset("R" , Color.RED, "CandyCrush/resources/candyCane.jpeg");
-        e.addAsset("B" , Color.BLUE, "CandyCrush/resources/redSwirlly.jpg");
-        e.addAsset("P" , Color.PINK, "CandyCrush/resources/Green.png");
-        e.addAsset("Y" , Color.YELLOW, "CandyCrush/resources/Orange.png");
-        e.addAsset("G" , Color.GREEN, "CandyCrush/resources/pinkSwirl.jpg");
-        e.addAsset("O" , Color.ORANGE, "CandyCrush/resources/redStripes.jpg");
+        e.addAsset("R" , Color.RED, "CandyCrush/resources/Red-0.png");
+        e.addAsset("B" , Color.BLUE, "CandyCrush/resources/Blue-0.png");
+        e.addAsset("P" , Color.PINK, "CandyCrush/resources/Purple-0.png");
+        e.addAsset("Y" , Color.YELLOW, "CandyCrush/resources/Yellow-0.png");
+        e.addAsset("G" , Color.GREEN, "CandyCrush/resources/Green-0.png");
+        e.addAsset("O" , Color.ORANGE, "CandyCrush/resources/Orange-0.png");
         e.addAsset("COLORMATCH", Color.cyan, "CandyCrush/resources/choco.png");
         e.addAsset("CROSS", Color.white, "CandyCrush/resources/holiday.png");
     }

@@ -1,6 +1,6 @@
 # Required
 
-JavaFX or Java 10 
+Java 10 or JavaFX  
 
 # Instructions for running
 
@@ -9,7 +9,7 @@ JavaFX or Java 10
 3. Click Login
 4. You can now launch Bejeweled or Candy Crush
 
-# Issues
+# JAR Note
 
 We were unable to get the images to load even using ImageIO. We reverted it to display color *only for the jar build*
 
@@ -20,3 +20,7 @@ The change was a follows
 **on non-jar build:** btn.setIcon(new ImageIcon(resource.getDir(colorMap.get(map.getTile(i, j).getColor()))));
 
 **on jar build:** btn.setBackground(colorMap.get(map.getTile(i, j).getColor()));
+
+# Issues
+
+If you have trouble running the Jar, try running it with Java 10
